@@ -107,38 +107,6 @@ https://nodejs.org/en/download/prebuilt-installer
 
 ### Step 6:
 ```
-npm install -D tailwindcss autoprefixer postcss
-npm run build
 python manage.py runserver
 ```
 
-### Optional Step: Debugging potential bugs
-
-Bug 1: after `npm run build`
-```
-PS C:\Users\ferdi\OneDrive\Desktop\bali-food-guide> npm run build
-
-> bali-food-guide@1.0.0 build
-> npx tailwindcss -i ./src/input.css -o ./static/css/output.css
-
-node:internal/modules/cjs/loader:1251
-  throw err;
-  ^
-
-Error: Cannot find module 'C:\Users\ferdi\OneDrive\Desktop\bali-food-guide\node_modules\tailwindcss\lib\cli.js'
-    at Module._resolveFilename (node:internal/modules/cjs/loader:1248:15)
-    at Module._load (node:internal/modules/cjs/loader:1074:27)
-    at TracingChannel.traceSync (node:diagnostics_channel:315:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:166:5)
-    at node:internal/main/run_main_module:30:49 {
-  code: 'MODULE_NOT_FOUND',
-  requireStack: []
-}
-
-Node.js v22.9.0
-```
-
-- Delete the `node_modules` folder
-- Run on terminal: `npm install -D tailwindcss autoprefixer postcss`
-- Now your `npm run build` should work
