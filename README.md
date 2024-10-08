@@ -99,13 +99,6 @@ python manage.py import_restaurants
 ```
 
 ### Step 5:
-
-Install node.js from the following site for your OS:
-```
-https://nodejs.org/en/download/prebuilt-installer
-```
-
-### Step 6:
 ```
 python manage.py runserver
 ```
