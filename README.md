@@ -26,9 +26,15 @@ filter
 https://overpass-turbo.eu
 
 ## User roles
-```
-tba
-```
+Module/Feature list would be:
+•⁠  ⁠restaurant_list (Isaac)
+•⁠  ⁠login /register (Derensh)
+•⁠  ⁠reviewing Restaurants (Adiena)
+•⁠  ⁠Update/Add/Delete/Specifications for Restuarants (Bonbon)
+•⁠  ⁠Sorting Feature by certain fields (Bryant)
+•⁠  ⁠Map Feature (Donia)
+
+Other members are allowed to help each other with the implementation
 
 ## Application deployment link
 ```
