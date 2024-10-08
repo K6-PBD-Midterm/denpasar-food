@@ -12,10 +12,15 @@ Restaurant Locator based on Bali, Denpasar
 
 ## List of modules to be implemented
 ```
-Tailwindcss
+restaurants
+authentication
+reviews
+map 
+admin_dashboard
+filter
 ```
 
-To use Tailwind, first install `node` and then install tailwindcss with `npm install -D tailwindcss autoprefixer postcss`. Then, run `npm run build` to collect the tailwind classes, then run `python manage.py runserver` as usual.
+
 
 ## Souce of initial dataset
 https://overpass-turbo.eu
