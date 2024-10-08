@@ -1,0 +1,31 @@
+<div>
+    <div>
+        <h3>{{ restaurant.name|title }}</h3>
+        <p><span>Cuisine:</span> {{ restaurant.cuisine|default:"Not specified"|title }}</p>
+        {% with full_address=restaurant.street|default:""|add:" "|add:restaurant.housenumber|default:"" %}
+        <p><span>Address:</span> {{ full_address|default:"Not specified"|title }}</p>
+        {% endwith %}
+        <p><span>Phone:</span> {{ restaurant.phone|default:"Not specified"|title }}</p>
+        {% if restaurant.website %}
+            <p><span>Website:</span> <a href="{{ restaurant.website }}">{{ restaurant.website }}</a></p>
+        {% endif %}
+        <p><span>Coordinates:</span> {{ restaurant.latitude }}, {{ restaurant.longitude }}</p>
+        <div>
+            <iframe
+                frameborder="0"
+                scrolling="no"
+                marginheight="0"
+                marginwidth="0"
+                src="https://www.openstreetmap.org/export/embed.html?bbox={{ restaurant.longitude }},{{ restaurant.latitude }},{{ restaurant.longitude }},{{ restaurant.latitude }}&layer=mapnik&marker={{ restaurant.latitude }},{{ restaurant.longitude }}">
+            </iframe>
+        </div>
+        <div>
+            <a href="https://www.openstreetmap.org/?mlat={{ restaurant.latitude }}&mlon={{ restaurant.longitude }}#map=15/{{ restaurant.latitude }}/{{ restaurant.longitude }}">View Larger Map</a>
+        </div>
+        <div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination={{ restaurant.latitude }},{{ restaurant.longitude }}" target="_blank">
+                Plan a trip here!
+            </a>
+        </div>
+    </div>
+</div>

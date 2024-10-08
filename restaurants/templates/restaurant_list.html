@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Restaurants in Denpasar - Bali Food Guide{% endblock %}
+{% block content %}
+    <h2>Restaurants in Denpasar</h2>
+    
+    <!-- Debug information
+    <p>Number of restaurants: {{ page_obj.paginator.count }}</p>
+    <p>Page object: {{ page_obj }}</p>
+    <p>Is paginated: {{ is_paginated }}</p> -->
+    
+    <div>
+        {% for restaurant in page_obj %}
+            <p>Restaurant: {{ restaurant }}</p>
+            {% include "card.html" with restaurant=restaurant %}
+        {% empty %}
+            <p>No restaurants found.</p>
+        {% endfor %}
+    </div>
+    
+    <!-- Pagination controls -->
+    {% if is_paginated %}
+        <div>
+            <span>
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span>
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}
