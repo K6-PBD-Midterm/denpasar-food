@@ -27,12 +27,12 @@ https://overpass-turbo.eu
 
 ## User roles
 Module/Feature list would be:
-•⁠  ⁠restaurant_list (Isaac)
-•⁠  ⁠login /register (Derensh)
-•⁠  ⁠reviewing Restaurants (Adiena)
-•⁠  ⁠Update/Add/Delete/Specifications for Restuarants (Bonbon)
-•⁠  ⁠Sorting Feature by certain fields (Bryant)
-•⁠  ⁠Map Feature (Donia)
+- ⁠restaurant_list (Isaac)
+- login /register (Derensh)
+- reviewing Restaurants (Adiena)
+- ⁠Update/Add/Delete/Specifications for Restuarants (Bonbon)
+- Sorting Feature by certain fields (Bryant)
+- ⁠Map Feature (Donia)
 
 Other members are allowed to help each other with the implementation
 
