@@ -8,7 +8,16 @@
 - Bryant Warrick Cai		
 
 ## Application description
-Restaurant Locator based on Bali, Denpasar
+A web-based application for people to view a variety of restaurants in the Denpasar area.
+
+Users will be able to enjoy features such as:
+
+- finding restaurants near the user
+- Browsing our denpasar based restaurants database
+- Sort the database in various way such as cuisine, price,etc.
+- Viewing a spesific's restaurants detail
+- Find restaurants nearby me feature
+
 
 ## List of modules to be implemented
 ```
