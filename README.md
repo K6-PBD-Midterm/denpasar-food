@@ -44,7 +44,7 @@ tba
 ## Instruction for other user to start the code:
 NOTE: The following instructions ASSUME that your current local repo is fresh out of 
 ```
-git clone https://github.com/K6-PBD-Midterm/bali-food-guide.git
+git clone https://github.com/K6-PBD-Midterm/denpasar-food.git
 ```
 
 If you are in windows use `python`, if you're on linux/mac use `python3`
@@ -53,7 +53,7 @@ Make sure you are in the root folder when running startup code, for example:
 
 ```
 for Windows
-C:\Users\ferdi\OneDrive\Desktop\bali-food-guide>
+C:\Users\ferdi\OneDrive\Desktop\denpasar-food>
 
 for Mac
 
