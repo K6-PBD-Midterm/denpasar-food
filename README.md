@@ -15,9 +15,9 @@ Restaurant Locator based on Bali, Denpasar
 restaurants
 authentication
 reviews
-map 
+maps
 admin_dashboard
-filter
+navigation
 ```
 
 
@@ -30,15 +30,13 @@ Roles in the site:
 - Admin:
     This user is allowed to modify the web or restaurant in anyway it fits
 
-- Client:
+- User:
     This user is only allowed to view restaurants and not allowed to add restaurants.
 
-- Restaurant Owner:
-    This user is only allowed to view restaurants and add new restaurants.
-
 ## Application deployment link
+
 ```
-tba
+http://isaac-jesse-denpasarfood.pbp.cs.ui.ac.id/
 ```
 
 ## Instruction for other user to start the code:
