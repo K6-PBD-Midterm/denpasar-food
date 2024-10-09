@@ -26,15 +26,15 @@ filter
 https://overpass-turbo.eu
 
 ## User roles
-Module/Feature list would be:
-- ⁠restaurant_list (Isaac)
-- login /register (Derensh)
-- reviewing Restaurants (Adiena)
-- ⁠Update/Add/Delete/Specifications for Restuarants (Bonbon)
-- Sorting Feature by certain fields (Bryant)
-- ⁠Map Feature (Donia)
+Roles in the site:
+- Admin:
+    This user is allowed to modify the web or restaurant in anyway it fits
 
-Other members are allowed to help each other with the implementation
+- Client
+    This user is only allowed to view restaurants and not allowed to add restaurants.
+
+- Restaurant Owner
+    This user is only allowed to view restaurants and add new restaurants.
 
 ## Application deployment link
 ```
