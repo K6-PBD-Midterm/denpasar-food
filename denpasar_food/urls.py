@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RestaurantListView.as_view(), name='restaurant_list'),
     path('auth/', include('authentication.urls')),
+    path ('map/',include ('maps.urls')),
     # Add other URL patterns as needed
 ]
