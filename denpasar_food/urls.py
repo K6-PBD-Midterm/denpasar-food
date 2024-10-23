@@ -21,6 +21,6 @@ from restaurants.views import RestaurantListView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RestaurantListView.as_view(), name='restaurant_list'),
-    path('auth/', include('authentication.urls')),
+    path('', include('authentication.urls')),
     # Add other URL patterns as needed
 ]
