@@ -1,36 +1,39 @@
-{% extends 'base.html' %}
-{% block title %}Restaurants in Denpasar - Bali Food Guide{% endblock %}
+{% extends "base.html" %}
+
 {% block content %}
-    <h2>Restaurants in Denpasar</h2>
-    
-    <!-- Debug information
-    <p>Number of restaurants: {{ page_obj.paginator.count }}</p>
-    <p>Page object: {{ page_obj }}</p>
-    <p>Is paginated: {{ is_paginated }}</p> -->
-    
-    <div>
-        {% for restaurant in page_obj %}
-            <p>Restaurant: {{ restaurant }}</p>
-            {% include "card.html" with restaurant=restaurant %}
+    <h1 class="text-3xl font-bold mb-4">Restaurant List</h1>
+
+    <!-- Filter and search form -->
+    <form method="get" class="mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Filter</button>
+    </form>
+
+    <!-- Restaurant list -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for restaurant in restaurants %}
+            <div class="bg-white shadow-md rounded-lg p-4">
+                {% include "card.html" with restaurant=restaurant %}
+            </div>
         {% empty %}
-            <p>No restaurants found.</p>
+            <p class="col-span-full text-center">No restaurants found.</p>
         {% endfor %}
     </div>
     
     <!-- Pagination controls -->
     {% if is_paginated %}
-        <div>
+        <div class="mt-4 flex justify-center">
             <span>
                 {% if page_obj.has_previous %}
-                    <a href="?page=1">&laquo; first</a>
-                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    <a href="?page=1" class="px-2 py-1 bg-gray-200 rounded">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}" class="px-2 py-1 bg-gray-200 rounded">previous</a>
                 {% endif %}
-                <span>
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
+                <span class="px-2 py-1">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
                 {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">next</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    <a href="?page={{ page_obj.next_page_number }}" class="px-2 py-1 bg-gray-200 rounded">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}" class="px-2 py-1 bg-gray-200 rounded">last &raquo;</a>
                 {% endif %}
             </span>
         </div>
