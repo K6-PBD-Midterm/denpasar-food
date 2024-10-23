@@ -16,5 +16,42 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
+
+        var restaurants = [
+            {
+                name: "Bali Buda",
+                rating: "★★★★☆ (4,5/5)", 
+                cuisine : "Organic",
+                lat: -8.670880,
+                lon: 115.213501
+            },
+            {
+                name: "Warung Blanjong",
+                rating: "★★★☆☆ (3,4/5)",
+                cuisine : "Indonesian",
+                lat: -8.689847,
+                lon: 115.233961
+            },
+            {
+                name: "Dapoer Pemuda",
+                rating: "★★★★★ (5/5)", 
+                cuisine : "Indonesian",
+                lat: -8.672195,
+                lon: 115.215121
+            },
+            {
+                name: "Nook Bali",
+                rating: "★★★★☆ (4,1/5)", 
+                cuisine : "International",
+                lat: -8.678924,
+                lon: 115.222582
+            }
+        ];
+
+        // Parcourir les restaurants et ajouter un marqueur pour chaque restaurant
+        restaurants.forEach(function(restaurant) {
+            var marker = L.marker([restaurant.lat, restaurant.lon]).addTo(map);
+            marker.bindPopup("<b>" + restaurant.name + "</b><br>" + restaurant.cuisine +"<br>Notation : " + restaurant.rating);
+        });
     </script>
 {% endblock %}
