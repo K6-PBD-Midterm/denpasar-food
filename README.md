@@ -44,7 +44,7 @@ Roles in the site:
 
 ## Application deployment link
 
-http://isaac-jesse-denpasarfood.pbp.cs.ui.ac.id/
+👉 http://isaac-jesse-denpasarfood.pbp.cs.ui.ac.id/
 
 ## Instruction for other user to start the code:
 NOTE: The following instructions ASSUME that your current local repo is fresh out of 
