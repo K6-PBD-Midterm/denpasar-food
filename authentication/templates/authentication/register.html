@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
-{% block meta %}
+{% block title_meta %}
 <head>
     <title>Register</title>
 </head>
-{% block meta %}
-<body>
+{% endblock title_meta %}
+
+{% block content %}
     <h2>Register</h2>
     {% if messages %}
         {% for message in messages %}
@@ -17,5 +18,4 @@
         <button type="submit">Register</button>
     </form>
     <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
-</body>
-</html>
+{% endblock %}
