@@ -1,0 +1,15 @@
+<nav>
+    <ul>
+        {% if user.is_authenticated %}
+            <li>Welcome, {{ user.username }}!</li>
+            <li><a href="{% url 'authentication:logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'authentication:login' %}">Login</a></li>
+            <li><a href="{% url 'authentication:register' %}">Register</a></li>
+        {% endif %}
+        <li><a href="#">Add a new restaurant</a></li>
+        <li><a href="#">Sort and filter restaurants</a></li>
+        <li><a href="#">Add a review</a></li>
+        <li><a href="#">Map</a></li>
+    </ul>
+</nav>
