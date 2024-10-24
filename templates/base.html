@@ -18,7 +18,7 @@
         <div>
             <!-- Logic to toggle the Denpasar Food Guide link -->
             {% if request.path == '/' %}
-                <h1><a href="{% url 'admin_dashboard_restaurant_list' %}">Denpasar Food Guide</a></h1>
+                <h1><a href="{% url 'admin_dashboard:admin_dashboard_restaurant_list' %}">Denpasar Food Guide</a></h1>
             {% else %}
                 <h1><a href="{% url 'restaurant_list' %}">Denpasar Food Guide</a></h1>
             {% endif %}

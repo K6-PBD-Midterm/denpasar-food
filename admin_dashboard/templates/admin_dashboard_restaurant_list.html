@@ -3,46 +3,65 @@
 {% block content %}
 <h1 class="text-3xl font-bold mb-4">Admin Dashboard</h1>
 
-<!-- Filter and search form -->
-<div class="flex items-center space-x-4">
-    <form method="get" class="flex">
+<!-- Toolbar -->
+<div class="flex items-center space-x-4 mb-4">
+    <!-- Batch Delete Form (Delete Selected button and checkboxes) -->
+    <form id="batch-delete-form" method="post" action="{% url 'admin_dashboard:admin_dashboard_restaurant_batch_delete' %}" class="flex items-center">
+        {% csrf_token %}
+        <!-- Delete Selected button -->
+        <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded">Delete Selected</button>
+    </form>
+
+    <!-- Search Form -->
+    <form method="get" class="flex items-center">
         <input type="text" name="q" placeholder="Search restaurants..." value="{{ request.GET.q }}" class="border border-gray-300 p-2 rounded-md">
         <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded">Search</button>
     </form>
 
-    <!-- Add a button to add a new restaurant -->
-    <a href="{% url 'admin_dashboard_restaurant_create' %}" class="px-4 py-2 bg-green-500 text-white rounded">Add Restaurant</a>
+    <!-- Add Restaurant button -->
+    <a href="{% url 'admin_dashboard:admin_dashboard_restaurant_create' %}" class="px-4 py-2 bg-green-500 text-white rounded">Add Restaurant</a>
 </div>
 
-<!-- Restaurant list -->
-<form method="post" action="">
-    {% csrf_token %}
-    <table class="min-w-full bg-white">
-        <thead>
-            <tr class="w-full">
-                <th class="border p-4 text-left"><input type="checkbox" id="select-all"></th>
-                <th class="border p-4 text-left">Name</th>
-                <th class="border p-4 text-left">Cuisine</th>
-                <th class="border p-4 text-left">Address</th>
-                <th class="border p-4 text-left">Phone</th>
-                <th class="border p-4 text-left">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for restaurant in restaurants %}
-            <tr>
-                <td class="border p-4"><input type="checkbox" name="restaurant_ids" value="{{ restaurant.id }}"></td>
-                <td class="border p-4">{{ restaurant.name }}</td>
-                <td class="border p-4">{{ restaurant.cuisines|join:", " }}</td>
-                <td class="border p-4">{{ restaurant.address }}</td>
-                <td class="border p-4">{{ restaurant.phone }}</td>
-                <td class="border p-4">
-                    <a href="{% url 'admin_dashboard_restaurant_update' restaurant.id %}" class="text-blue-500 hover:underline">Update</a>
-                    <a href="{% url 'admin_dashboard_restaurant_delete' restaurant.id %}" class="text-red-500 hover:underline">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</form>
+<!-- Restaurant List (Table) -->
+<table class="min-w-full bg-white">
+    <thead>
+        <tr class="w-full">
+            <th class="border p-4 text-left"><input type="checkbox" id="select-all"></th>
+            <th class="border p-4 text-left">Name</th>
+            <th class="border p-4 text-left">Cuisine</th>
+            <th class="border p-4 text-left">Address</th>
+            <th class="border p-4 text-left">Phone</th>
+            <th class="border p-4 text-left">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for restaurant in restaurants %}
+        <tr>
+            <!-- Associate checkboxes with the batch delete form using the 'form' attribute -->
+            <td class="border p-4">
+                <input type="checkbox" name="restaurant_ids" value="{{ restaurant.id }}" form="batch-delete-form">
+            </td>
+            <td class="border p-4">{{ restaurant.name }}</td>
+            <td class="border p-4">{{ restaurant.cuisines|join:", " }}</td>
+            <td class="border p-4">{{ restaurant.address }}</td>
+            <td class="border p-4">{{ restaurant.phone }}</td>
+            <td class="border p-4">
+                <a href="{% url 'admin_dashboard:admin_dashboard_restaurant_update' restaurant.id %}" class="text-blue-500 hover:underline">Update</a>
+                <a href="{% url 'admin_dashboard:admin_dashboard_restaurant_delete' restaurant.id %}" class="text-red-500 hover:underline">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- JavaScript for Select All functionality -->
+<script>
+    document.getElementById('select-all').addEventListener('click', function(event) {
+        var checkboxes = document.querySelectorAll('input[name="restaurant_ids"]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = event.target.checked;
+        });
+    });
+</script>
+
 {% endblock %}
