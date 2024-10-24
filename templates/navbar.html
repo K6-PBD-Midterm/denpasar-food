@@ -1,15 +1,21 @@
-<nav>
-    <ul>
-        {% if user.is_authenticated %}
-            <li>Welcome, {{ user.username }}!</li>
-            <li><a href="{% url 'authentication:logout' %}">Logout</a></li>
-        {% else %}
-            <li><a href="{% url 'authentication:login' %}">Login</a></li>
-            <li><a href="{% url 'authentication:register' %}">Register</a></li>
-        {% endif %}
-        <li><a href="#">Add a new restaurant</a></li>
-        <li><a href="#">Sort and filter restaurants</a></li>
-        <li><a href="#">Add a review</a></li>
-        <li><a href="#">Map</a></li>
-    </ul>
+<nav class="bg-white shadow-md">
+    <div class="container mx-auto px-4">
+        <ul class="flex items-center justify-between py-4">
+            <li class="flex items-center space-x-4">
+                {% if user.is_authenticated %}
+                    <span class="text-gray-700">Welcome, {{ user.username }}!</span>
+                    <a href="{% url 'authentication:logout' %}" class="text-blue-600 hover:text-blue-800">Logout</a>
+                {% else %}
+                    <a href="{% url 'authentication:login' %}" class="text-blue-600 hover:text-blue-800">Login</a>
+                    <a href="{% url 'authentication:register' %}" class="text-blue-600 hover:text-blue-800">Register</a>
+                {% endif %}
+            </li>
+            <li class="flex items-center space-x-4">
+                <a href="#" class="text-gray-700 hover:text-gray-900">Add a new restaurant</a>
+                <a href="#" class="text-gray-700 hover:text-gray-900">Sort and filter restaurants</a>
+                <a href="#" class="text-gray-700 hover:text-gray-900">Add a review</a>
+                <a href="#" class="text-gray-700 hover:text-gray-900">Map</a>
+            </li>
+        </ul>
+    </div>
 </nav>

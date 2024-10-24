@@ -1,42 +1,57 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<form id="search-form" method="get" action="{% url 'restaurant_list' %}">
-    <input type="text" name="search" placeholder="Search..." value="{{ request.GET.search }}">
-    <select name="search_by">
-        <option value="name" {% if request.GET.search_by == 'name' %}selected{% endif %}>Name</option>
-        <option value="cuisine" {% if request.GET.search_by == 'cuisine' %}selected{% endif %}>Cuisine</option>
-        <option value="city" {% if request.GET.search_by == 'city' %}selected{% endif %}>City</option>
-    </select>
-    <button type="submit">Search</button>
-</form>
+
+<div class="landing-page">
+    <div class="hero bg-cover bg-center h-[80vh] flex items-center justify-center relative" style="background-image: url('{% static 'images/restaurant-background.jpg' %}'); background-size: cover;">
+        <div id="search-container" class="absolute top-1/2 transform -translate-y-1/2 left-0 right-0 z-50 w-full p-4 transition-all duration-300">
+            <form id="search-form" method="get" action="{% url 'restaurant_list' %}" class="flex justify-center items-center max-w-screen-md mx-auto">
+                <div class="relative w-full">
+                    <input type="text" name="search" placeholder="Search..." value="{{ request.GET.search }}" class="bg-white bg-opacity-20 border border-white border-opacity-30 text-black placeholder-black text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 backdrop-blur-sm">
+                </div>
+                <button type="submit" class="text-black bg-blue-700 bg-opacity-80 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-r-lg text-sm px-4 py-2.5 backdrop-blur-sm">Search</button>
+            </form>
+        </div>
+    </div>
+
 
 <!-- Restaurant list container -->
-<div id="restaurant-list-container">
+<div id="restaurant-list-container" class="container mx-auto mt-8 px-4">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {% for restaurant in restaurants %}
             <div class="bg-white shadow-md rounded-lg p-4">
                 {% include "card.html" with restaurant=restaurant %}
             </div>
         {% empty %}
-            <p class="col-span-full text-center">No restaurants found.</p>
+            <p class="col-span-full text-center text-gray-500">No restaurants found.</p>
         {% endfor %}
     </div>
 
     <!-- Pagination controls -->
     {% if is_paginated %}
-        <div class="mt-4 flex justify-center">
-            <span>
-                {% if page_obj.has_previous %}
-                    <a href="?page=1" class="px-2 py-1 bg-gray-200 rounded pagination-link">&laquo; first</a>
-                    <a href="?page={{ page_obj.previous_page_number }}" class="px-2 py-1 bg-gray-200 rounded pagination-link">previous</a>
-                {% endif %}
-                <span class="px-2 py-1">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}" class="px-2 py-1 bg-gray-200 rounded pagination-link">next</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}" class="px-2 py-1 bg-gray-200 rounded pagination-link">last &raquo;</a>
-                {% endif %}
+        <div class="flex items-center justify-center mt-4">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class="flex items-center justify-center px-3 h-8 mr-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 pagination-link">
+                    <svg class="w-3.5 h-3.5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4M1 5l4-4"/>
+                    </svg>
+                    First
+                </a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 pagination-link">Previous</a>
+            {% endif %}
+            <span class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
             </span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 pagination-link">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 pagination-link">
+                    Last
+                    <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                </a>
+            {% endif %}
         </div>
     {% endif %}
 </div>
