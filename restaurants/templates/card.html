@@ -1,39 +1,28 @@
-
-    <h3 class="text-xl font-bold mb-2">{{ restaurant.name|title }}</h3>
-    <p><span class="font-semibold">Cuisine:</span> 
-        {% if restaurant.cuisines %}
-            {% for cuisine in restaurant.cuisines %}
-                {{ cuisine }}{% if not forloop.last %}, {% endif %}
-            {% endfor %}
-        {% else %}
-            Not specified
-        {% endif %}
-    </p>
-    {% with full_address=restaurant.address %}
-    <p><span class="font-semibold">Address:</span> {{ full_address|default:"Not specified"|title }}</p>
-    {% endwith %}
-    <p><span class="font-semibold">Phone:</span> {{ restaurant.phone|default:"Not specified"|title }}</p>
-    {% if restaurant.website %}
-        <p><span class="font-semibold">Website:</span> <a href="{{ restaurant.website }}" class="text-blue-500">{{ restaurant.website }}</a></p>
-    {% endif %}
-    <p><span class="font-semibold">Coordinates:</span> {{ restaurant.latitude }}, {{ restaurant.longitude }}</p>
-    
-    <div class="mt-2">
+<div class="flex flex-row items-center w-full">  <!-- Use flexbox for horizontal layout -->
+    <div class="flex-shrink-0">
         {% if restaurant.image_url %}
-            <img src="{{ restaurant.image_url }}" alt="{{ restaurant.name }}" class="w-full h-48 object-cover rounded-lg mb-4">
+            <img src="{{ restaurant.image_url }}" alt="{{ restaurant.name }}" class="w-32 h-32 object-cover rounded-lg mr-4">  <!-- Fixed size for images -->
         {% else %}
-            <iframe
-                frameborder="0"
-                scrolling="no"
-                marginheight="0"
-                marginwidth="0"
-                class="w-full h-48"
-                src="https://www.openstreetmap.org/export/embed.html?bbox={{ restaurant.longitude }},{{ restaurant.latitude }},{{ restaurant.longitude }},{{ restaurant.latitude }}&layer=mapnik&marker={{ restaurant.latitude }},{{ restaurant.longitude }}">
-            </iframe>
+            <div class="w-32 h-32 bg-gray-200 flex items-center justify-center rounded-lg mr-4">
+                <span>No Image Available</span>
+            </div>
         {% endif %}
     </div>
-    <div class="mt-2">
-        <a href="https://www.google.com/maps/dir/?api=1&destination={{ restaurant.latitude }},{{ restaurant.longitude }}" target="_blank" class="text-blue-500">
-            Plan a trip here!
-        </a>
+    <div class="flex-grow">
+        <h3 class="text-xl font-bold mb-2">{{ restaurant.name|title }}</h3>
+        <p><span class="font-semibold">Cuisine:</span> 
+            {% if restaurant.cuisines %}
+                {% for cuisine in restaurant.cuisines %}
+                    {{ cuisine }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            {% else %}
+                Not specified
+            {% endif %}
+        </p>
+        <p><span class="font-semibold">Address:</span> {{ restaurant.address|default:"Not specified"|title }}</p>
+        <p><span class="font-semibold">Phone:</span> {{ restaurant.phone|default:"Not specified"|title }}</p>
+        {% if restaurant.website %}
+            <p><span class="font-semibold">Website:</span> <a href="{{ restaurant.website }}" class="text-blue-500">{{ restaurant.website }}</a></p>
+        {% endif %}
     </div>
+</div>

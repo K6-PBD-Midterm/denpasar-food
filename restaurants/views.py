@@ -7,6 +7,7 @@ from .forms import RestaurantFilterForm
 import logging
 from django.db.models import Q
 import random
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -14,7 +15,7 @@ class RestaurantListView(ListView):
     model = Restaurant
     template_name = 'restaurant_list.html'
     context_object_name = 'restaurants'
-    paginate_by = 15
+    paginate_by = 9
 
     def get_queryset(self):
         queryset = super().get_queryset()

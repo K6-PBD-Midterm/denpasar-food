@@ -17,9 +17,9 @@
 
 <!-- Restaurant list container -->
 <div id="restaurant-list-container" class="container mx-auto mt-12 px-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="flex flex-col space-y-4">  <!-- Use flexbox for vertical stacking -->
         {% for restaurant in restaurants %}
-            <div class="bg-white shadow-md rounded-lg p-4">
+            <div class="bg-white shadow-md rounded-lg p-4 flex flex-row items-center">  <!-- Use flexbox for horizontal layout -->
                 {% include "card.html" with restaurant=restaurant %}
             </div>
         {% empty %}
@@ -29,7 +29,7 @@
 
     <!-- Pagination controls -->
     {% if is_paginated %}
-        <div class="flex items-center justify-center mt-4">
+        <div class="flex items-center justify-center mt-4 pb-4">  
             {% if page_obj.has_previous %}
                 <a href="?page=1" class="flex items-center justify-center px-3 h-8 mr-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 pagination-link">
                     <svg class="w-3.5 h-3.5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
