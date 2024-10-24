@@ -1,13 +1,44 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form method="get" action="{% url 'restaurant_list' %}">
-    <!-- Your form fields here -->
+<form id="search-form" method="get" action="{% url 'restaurant_list' %}">
+    <input type="text" name="search" placeholder="Search..." value="{{ request.GET.search }}">
+    <select name="search_by">
+        <option value="name" {% if request.GET.search_by == 'name' %}selected{% endif %}>Name</option>
+        <option value="cuisine" {% if request.GET.search_by == 'cuisine' %}selected{% endif %}>Cuisine</option>
+        <option value="city" {% if request.GET.search_by == 'city' %}selected{% endif %}>City</option>
+    </select>
+    <button type="submit">Search</button>
 </form>
 
 <!-- Restaurant list container -->
 <div id="restaurant-list-container">
-    {% include 'restaurant_list_ajax.html' %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for restaurant in restaurants %}
+            <div class="bg-white shadow-md rounded-lg p-4">
+                {% include "card.html" with restaurant=restaurant %}
+            </div>
+        {% empty %}
+            <p class="col-span-full text-center">No restaurants found.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination controls -->
+    {% if is_paginated %}
+        <div class="mt-4 flex justify-center">
+            <span>
+                {% if page_obj.has_previous %}
+                    <a href="?page=1" class="px-2 py-1 bg-gray-200 rounded pagination-link">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}" class="px-2 py-1 bg-gray-200 rounded pagination-link">previous</a>
+                {% endif %}
+                <span class="px-2 py-1">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="px-2 py-1 bg-gray-200 rounded pagination-link">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}" class="px-2 py-1 bg-gray-200 rounded pagination-link">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
 </div>
 
 <script>
@@ -16,7 +47,10 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(url)
             .then(response => response.text())
             .then(html => {
-                document.getElementById('restaurant-list-container').innerHTML = html;
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newContent = doc.getElementById('restaurant-list-container').innerHTML;
+                document.getElementById('restaurant-list-container').innerHTML = newContent;
                 attachPaginationHandlers();
             })
             .catch(error => console.error('Error loading page:', error));
@@ -30,6 +64,13 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
+    document.getElementById('search-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const queryString = new URLSearchParams(formData).toString();
+        loadPage(`?${queryString}`);
+    });
 
     attachPaginationHandlers();
 });
