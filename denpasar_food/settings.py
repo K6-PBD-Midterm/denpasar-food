@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'restaurants',
     'authentication',
     'compressor',
+    'admin_dashboard',
 ]
 
 MIDDLEWARE = [

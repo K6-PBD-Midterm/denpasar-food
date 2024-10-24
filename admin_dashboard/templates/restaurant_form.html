@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">{% if form.instance.pk %}Edit Restaurant{% else %}Add Restaurant{% endif %}</h1>
+
+<!-- Description for required fields -->
+<p class="text-sm text-gray-600 mb-4">Fields marked with a <span class="text-red-500">*</span> are required.</p>
+
+<div class="bg-white shadow-md rounded-lg p-6">
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        
+        <!-- Render the form fields with proper styling and outlines -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                {{ form.osm_id.label_tag }}  <!-- This will render the label with the asterisk if required -->
+                {{ form.osm_id }}
+            </div>
+            
+            <div>
+                {{ form.name.label_tag }} <!-- Let Django handle the label rendering -->
+                {{ form.name }}
+            </div>
+            
+            <div>
+                {{ form.latitude.label_tag }}
+                {{ form.latitude }}
+            </div>
+            
+            <div>
+                {{ form.longitude.label_tag }}
+                {{ form.longitude }}
+            </div>
+            
+            <div>
+                {{ form.amenity.label_tag }}
+                {{ form.amenity }}
+            </div>
+            
+            <div>
+                {{ form.cuisine.label_tag }}
+                {{ form.cuisine }}
+            </div>
+            
+            <div>
+                {{ form.city.label_tag }}
+                {{ form.city }}
+            </div>
+            
+            <div>
+                {{ form.street.label_tag }}
+                {{ form.street }}
+            </div>
+            
+            <div>
+                {{ form.housenumber.label_tag }}
+                {{ form.housenumber }}
+            </div>
+            
+            <div>
+                {{ form.postcode.label_tag }}
+                {{ form.postcode }}
+            </div>
+            
+            <div>
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+            
+            <div>
+                {{ form.phone.label_tag }}
+                {{ form.phone }}
+            </div>
+            
+            <div>
+                {{ form.website.label_tag }}
+                {{ form.website }}
+            </div>
+            
+            <div>
+                {{ form.image_url.label_tag }}
+                {{ form.image_url }}
+            </div>
+        </div>
+
+        <div class="mt-6 flex items-center justify-between">
+            <!-- Conditional button for adding or modifying -->
+            {% if form.instance.pk %}
+                <button type="submit" class="px-4 py-2 bg-yellow-500 text-white rounded-lg">Save</button>
+            {% else %}
+                <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-lg">Add</button>
+            {% endif %}
+            <a href="{% url 'admin_dashboard_restaurant_list' %}" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
