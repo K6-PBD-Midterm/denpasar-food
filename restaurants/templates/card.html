@@ -1,7 +1,15 @@
-<div class="border p-4 rounded-lg shadow-md">
+
     <h3 class="text-xl font-bold mb-2">{{ restaurant.name|title }}</h3>
-    <p><span class="font-semibold">Cuisine:</span> {{ restaurant.cuisine|default:"Not specified"|title }}</p>
-    {% with full_address=restaurant.street|default:""|add:" "|add:restaurant.housenumber|default:"" %}
+    <p><span class="font-semibold">Cuisine:</span> 
+        {% if restaurant.cuisines %}
+            {% for cuisine in restaurant.cuisines %}
+                {{ cuisine }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        {% else %}
+            Not specified
+        {% endif %}
+    </p>
+    {% with full_address=restaurant.address %}
     <p><span class="font-semibold">Address:</span> {{ full_address|default:"Not specified"|title }}</p>
     {% endwith %}
     <p><span class="font-semibold">Phone:</span> {{ restaurant.phone|default:"Not specified"|title }}</p>
@@ -29,4 +37,3 @@
             Plan a trip here!
         </a>
     </div>
-</div>

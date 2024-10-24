@@ -7,7 +7,7 @@ class RestaurantForm(forms.ModelForm):
         model = Restaurant
         fields = '__all__'
         widgets = {
-            'osm_id': forms.TextInput(attrs={'class': 'border border-gray-300 p-2 rounded-md w-full'}),
+            'id': forms.TextInput(attrs={'class': 'border border-gray-300 p-2 rounded-md w-full'}),
             'name': forms.TextInput(attrs={'class': 'border border-gray-300 p-2 rounded-md w-full'}),
             'latitude': forms.NumberInput(attrs={'class': 'border border-gray-300 p-2 rounded-md w-full'}),
             'longitude': forms.NumberInput(attrs={'class': 'border border-gray-300 p-2 rounded-md w-full'}),
