@@ -5,6 +5,8 @@ from django.views.generic import ListView
 from .models import Restaurant
 from .forms import RestaurantFilterForm
 import logging
+from django.db.models import Q
+import random
 
 logger = logging.getLogger(__name__)
 
@@ -15,22 +17,23 @@ class RestaurantListView(ListView):
     paginate_by = 9
 
     def get_queryset(self):
+        queryset = super().get_queryset()
+        search = self.request.GET.get('search')
         search_by = self.request.GET.get('search_by', 'name')
-        search_query = self.request.GET.get('search', '')
-        logger.info(f"Search by: {search_by}")
-        logger.info(f"Search query: {search_query}")
 
-        queryset = Restaurant.objects.all()
+        if search:
+            if search_by == 'name':
+                queryset = queryset.filter(name__icontains=search)
+            elif search_by == 'cuisine':
+                queryset = queryset.filter(cuisine__icontains=search)
 
-        if search_query:
-            filter_kwargs = {f"{search_by}__icontains": search_query}
-            queryset = queryset.filter(**filter_kwargs)
-
-        logger.info(f"Queryset count: {queryset.count()}")
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        all_restaurants = list(Restaurant.objects.all())
+        featured_restaurants = random.sample(all_restaurants, min(3, len(all_restaurants)))
+        context['featured_restaurants'] = featured_restaurants
         context['total_restaurants'] = Restaurant.objects.count()
         context['form'] = RestaurantFilterForm(self.request.GET or None)
         return context
