@@ -5,19 +5,18 @@
 
 <div class="landing-page">
     <div class="hero bg-cover bg-center h-[80vh] flex items-center justify-center relative" style="background-image: url('{% static 'images/restaurant-background.jpg' %}'); background-size: cover;">
-        <div id="search-container" class="absolute top-1/2 transform -translate-y-1/2 left-0 right-0 z-50 w-full p-4 transition-all duration-300">
-            <form id="search-form" method="get" action="{% url 'restaurant_list' %}" class="flex justify-center items-center max-w-screen-md mx-auto">
-                <div class="relative w-full">
-                    <input type="text" name="search" placeholder="Search..." value="{{ request.GET.search }}" class="bg-white bg-opacity-20 border border-white border-opacity-30 text-black placeholder-black text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 backdrop-blur-sm">
-                </div>
-                <button type="submit" class="text-black bg-blue-700 bg-opacity-80 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-r-lg text-sm px-4 py-2.5 backdrop-blur-sm">Search</button>
-            </form>
-        </div>
+        <h1 class="text-white text-4xl font-bold">Denpasar Dine-In</h1>
+    </div>
+    <div id="search-container" class="sticky top-0 left-0 right-0 z-50 w-full p-4 transition-all duration-300">
+        <form id="search-form" method="get" action="{% url 'restaurant_list' %}" class="flex justify-center items-center max-w-screen-md mx-auto">
+            <div class="relative w-full">
+                <input type="text" name="search" placeholder="Search..." value="{{ request.GET.search }}" class="bg-white border border-white text-black placeholder-black text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 backdrop-blur-sm">
+            </div>
+        </form>
     </div>
 
-
 <!-- Restaurant list container -->
-<div id="restaurant-list-container" class="container mx-auto mt-8 px-4">
+<div id="restaurant-list-container" class="container mx-auto mt-12 px-4">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {% for restaurant in restaurants %}
             <div class="bg-white shadow-md rounded-lg p-4">

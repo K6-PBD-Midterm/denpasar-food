@@ -14,7 +14,7 @@ class RestaurantListView(ListView):
     model = Restaurant
     template_name = 'restaurant_list.html'
     context_object_name = 'restaurants'
-    paginate_by = 9
+    paginate_by = 15
 
     def get_queryset(self):
         queryset = super().get_queryset()
