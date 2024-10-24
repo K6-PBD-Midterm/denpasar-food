@@ -1,7 +1,7 @@
 from django.db import models
 
 class Restaurant(models.Model):
-    osm_id = models.BigIntegerField(unique=True, primary_key=True)
+    osm_id = models.BigIntegerField(unique=True)
     name = models.CharField(max_length=255)
     latitude = models.FloatField()
     longitude = models.FloatField()

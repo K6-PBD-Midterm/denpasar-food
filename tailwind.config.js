@@ -3,6 +3,7 @@ module.exports = {
       './templates/**/*.html',
       './node_modules/flowbite/**/*.js',
       './restaurants/**/*.html',
+      './navigation/**/*.html',
   ],
   theme: {
     extend: {},
