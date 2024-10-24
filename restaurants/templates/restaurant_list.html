@@ -1,41 +1,37 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-    <h1 class="text-3xl font-bold mb-4">Restaurant List</h1>
+<form method="get" action="{% url 'restaurant_list' %}">
+    <!-- Your form fields here -->
+</form>
 
-    <!-- Filter and search form -->
-    <form method="get" class="mb-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {{ form.as_p }}
-        </div>
-        <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Filter</button>
-    </form>
+<!-- Restaurant list container -->
+<div id="restaurant-list-container">
+    {% include 'restaurant_list_ajax.html' %}
+</div>
 
-    <!-- Restaurant list -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {% for restaurant in restaurants %}
-            <div class="bg-white shadow-md rounded-lg p-4">
-                {% include "card.html" with restaurant=restaurant %}
-            </div>
-        {% empty %}
-            <p class="col-span-full text-center">No restaurants found.</p>
-        {% endfor %}
-    </div>
-    
-    <!-- Pagination controls -->
-    {% if is_paginated %}
-        <div class="mt-4 flex justify-center">
-            <span>
-                {% if page_obj.has_previous %}
-                    <a href="?page=1" class="px-2 py-1 bg-gray-200 rounded">&laquo; first</a>
-                    <a href="?page={{ page_obj.previous_page_number }}" class="px-2 py-1 bg-gray-200 rounded">previous</a>
-                {% endif %}
-                <span class="px-2 py-1">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}" class="px-2 py-1 bg-gray-200 rounded">next</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}" class="px-2 py-1 bg-gray-200 rounded">last &raquo;</a>
-                {% endif %}
-            </span>
-        </div>
-    {% endif %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function loadPage(url) {
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('restaurant-list-container').innerHTML = html;
+                attachPaginationHandlers();
+            })
+            .catch(error => console.error('Error loading page:', error));
+    }
+
+    function attachPaginationHandlers() {
+        document.querySelectorAll('.pagination-link').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                loadPage(this.href);
+            });
+        });
+    }
+
+    attachPaginationHandlers();
+});
+</script>
 {% endblock %}

@@ -1,7 +1,11 @@
-from django.views.generic import ListView
-from restaurants.models import Restaurant
+# views.py
+from django.shortcuts import render
+from django.core.paginator import Paginator
+from django.http import JsonResponse
+from .models import Restaurant
 from .forms import RestaurantFilterForm
 import logging
+from django.views.generic import ListView
 
 logger = logging.getLogger(__name__)
 
@@ -9,7 +13,7 @@ class RestaurantListView(ListView):
     model = Restaurant
     template_name = 'restaurant_list.html'
     context_object_name = 'restaurants'
-    paginate_by = 10
+    paginate_by = 9
 
     def get_queryset(self):
         search_by = self.request.GET.get('search_by', 'name')
@@ -31,3 +35,17 @@ class RestaurantListView(ListView):
         context['total_restaurants'] = Restaurant.objects.count()
         context['form'] = RestaurantFilterForm(self.request.GET or None)
         return context
+
+def restaurant_list_ajax(request):
+    restaurants = Restaurant.objects.all()
+    paginator = Paginator(restaurants, 9)  # Show 9 restaurants per page
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'restaurants': page_obj,
+        'is_paginated': page_obj.has_other_pages(),
+        'page_obj': page_obj,
+    }
+    return render(request, 'restaurant_list_ajax.html', context)

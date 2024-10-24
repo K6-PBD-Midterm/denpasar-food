@@ -1,7 +1,6 @@
 # urls.py
 from django.contrib import admin
 from django.urls import path, include
-from restaurants.views import RestaurantListView
 from admin_dashboard.views import (
     admin_dashboard_restaurant_list,
     admin_dashboard_restaurant_create,
@@ -12,7 +11,7 @@ from admin_dashboard.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RestaurantListView.as_view(), name='restaurant_list'),
+    path('', include('restaurants.urls')),
     path('auth/', include('authentication.urls')),  # Include authentication URLs
     path('adminDashboard/restaurants/', admin_dashboard_restaurant_list, name='admin_dashboard_restaurant_list'),
     path('adminDashboard/restaurants/add/', admin_dashboard_restaurant_create, name='admin_dashboard_restaurant_create'),
