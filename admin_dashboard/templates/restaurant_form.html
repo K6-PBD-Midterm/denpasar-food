@@ -3,22 +3,21 @@
 {% block content %}
 <h1 class="text-3xl font-bold mb-6">{% if form.instance.pk %}Edit Restaurant{% else %}Add Restaurant{% endif %}</h1>
 
-<!-- Description for required fields -->
 <p class="text-sm text-gray-600 mb-4">Fields marked with a <span class="text-red-500">*</span> are required.</p>
 
 <div class="bg-white shadow-md rounded-lg p-6">
     <form method="post" class="space-y-4">
         {% csrf_token %}
         
-        <!-- Render the form fields with proper styling and outlines -->
+        <!-- Render the form fields -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-                {{ form.osm_id.label_tag }}  <!-- This will render the label with the asterisk if required -->
+                {{ form.osm_id.label_tag }}
                 {{ form.osm_id }}
             </div>
             
             <div>
-                {{ form.name.label_tag }} <!-- Let Django handle the label rendering -->
+                {{ form.name.label_tag }}
                 {{ form.name }}
             </div>
             
@@ -90,7 +89,7 @@
             {% else %}
                 <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-lg">Add</button>
             {% endif %}
-            <a href="{% url 'admin_dashboard_restaurant_list' %}" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg">Cancel</a>
+            <a href="{% url 'admin_dashboard:admin_dashboard_restaurant_list' %}" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg">Cancel</a>
         </div>
     </form>
 </div>
