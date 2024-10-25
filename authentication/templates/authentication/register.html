@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
+{% block title_meta %}
 <head>
     <title>Register</title>
 </head>
-<body>
+{% endblock title_meta %}
+
+{% block content %}
     <h2>Register</h2>
     {% if messages %}
         {% for message in messages %}
@@ -15,6 +17,11 @@
         {{ form.as_p }}
         <button type="submit">Register</button>
     </form>
+<<<<<<< HEAD
+    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+{% endblock %}
+=======
     <p>Already have an account? <a href="{% url 'authentication:login' %}">Login here</a></p>
 </body>
 </html>
+>>>>>>> main
