@@ -1,4 +1,4 @@
-<div class="flex flex-col items-start w-full">  <!-- Use flexbox for vertical layout -->
+<div class="flex flex-col items-start w-full h-full">  <!-- Use flexbox for vertical layout -->
     <div class="flex-shrink-0 w-full">
         {% if restaurant.image_url %}
             <img src="{{ restaurant.image_url }}" alt="{{ restaurant.name }}" class="w-full h-40 object-cover rounded-lg mb-4">  <!-- Full width for images -->
@@ -24,10 +24,8 @@
         {% if restaurant.website %}
             <p><span class="font-semibold">Website:</span> <a href="{{ restaurant.website }}" class="text-blue-500">{{ restaurant.website }}</a></p>
         {% endif %}
-
-        <!-- Add review link -->
-        <div class="mt-4"> <!-- Adds margin top for spacing -->
-            <a href="{% url 'add_review' restaurant.id %}" class="text-blue-500 hover:underline">Add a review</a>
-        </div>
+    </div>
+    <div class="mt-auto pt-4 w-full"> <!-- Adds margin top auto for spacing -->
+        <a href="{% url 'add_review' restaurant.id %}" class="text-blue-500 hover:underline">Add a review</a>
     </div>
 </div>
