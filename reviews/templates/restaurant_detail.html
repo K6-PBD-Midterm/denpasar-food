@@ -1,0 +1,13 @@
+<h2 class="text-2xl font-bold mb-4">Reviews</h2>
+
+{% if restaurant.reviews.all %}
+    {% for review in restaurant.reviews.all %}
+        <div class="border p-4 rounded-lg mb-4">
+            <p class="font-semibold">Rating: {{ review.rating }} / 5</p>
+            <p>{{ review.comment }}</p>
+            <p class="text-sm text-gray-500">Reviewed by {{ review.user.username }} on {{ review.created_at }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No reviews yet. Be the first to <a href="{% url 'add_review' restaurant.id %}" class="text-blue-500">leave a review</a>.</p>
+{% endif %}

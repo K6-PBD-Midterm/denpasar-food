@@ -5,7 +5,7 @@ class Restaurant(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    reviews = models.IntegerField(null=True, blank=True)
+    reviews_count = models.IntegerField(null=True, blank=True)
     rating = models.FloatField(null=True, blank=True)
     link = models.URLField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)

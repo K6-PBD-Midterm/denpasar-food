@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'authentication',
     'compressor',
     'admin_dashboard',
+    'reviews',
 ]
 
 MIDDLEWARE = [
