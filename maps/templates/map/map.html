@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block map_meta %}
+<link rel="stylesheet" href="{% static 'map/css/styles.css' %}"/>
+{% endblock %}
+{% block content %}
+
+    <span> Map in progress ..... </span>
+    {% if restaurants %}
+    <div id="map_container">
+        <div id="map"></div>
+    </div>
+    {% else %}
+    <div>
+        <p>No restaurants found.</p>
+    </div>
+    {% endif %}
+    <script>
+        console.log ("rrrr")
+        var map = L.map('map').setView([-8.670458, 115.212629], 13); // Coordinates for Denpasar, Bali
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        const restaurantsData = {{ restaurants|safe }};
+        const text = {'name': 'Batujimbar Cafe', 'cuisines': ['Cafe', 'European', 'Asian', 'Indonesian'], 'rating': 4.0, 'latitude': -8.695581, 'longitude': 115.26374, 'price_range': '$$ - $$$'}
+        restaurantsData.forEach(restaurant => {
+            const marker = L.marker([restaurant.latitude, restaurant.longitude]).addTo(map);
+            marker.bindPopup("<b>" + restaurant.name + "</b><br>" + restaurant.cuisines + "<br>Notation : " + restaurant.rating + "<br> Price : " + restaurant.price_range);
+        });
+     
+    </script>
+{% endblock %}

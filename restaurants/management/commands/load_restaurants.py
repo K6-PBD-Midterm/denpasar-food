@@ -29,7 +29,6 @@ class Command(BaseCommand):
                     id=row['id'],
                     name=row['name'],
                     description=row['description'],
-                    reviews=row['reviews'],
                     rating=row['rating'],
                     link=row['link'],
                     email=row['email'],
