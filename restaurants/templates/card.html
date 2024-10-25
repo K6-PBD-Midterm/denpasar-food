@@ -24,5 +24,11 @@
         {% if restaurant.website %}
             <p><span class="font-semibold">Website:</span> <a href="{{ restaurant.website }}" class="text-blue-500">{{ restaurant.website }}</a></p>
         {% endif %}
+
+        <!-- Add review link -->
+        <div class="mt-4"> <!-- Adds margin top for spacing -->
+            <a href="{% url 'add_review' restaurant.id %}" class="text-blue-500 hover:underline">Add a review</a>
+        </div>
     </div>
 </div>
+
