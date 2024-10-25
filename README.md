@@ -12,7 +12,7 @@ A web-based application for people to view a variety of restaurants in the Denpa
 
 Users will be able to enjoy features such as:
 
-- finding restaurants near the user
+- Finding restaurants near the user
 - Browsing our denpasar based restaurants database
 - Sort the database in various way such as cuisine, price,etc.
 - Viewing a spesific's restaurants detail
@@ -89,22 +89,31 @@ Note: On Windows, if you get an error that running scripts is disabled on your s
 1. Open Windows PowerShell as an administrator. (Search "PowerShell" on start menu, then right-click -> Run as administrator)
 2. Run the following command: `Set-ExecutionPolicy Unrestricted -Force`
 
-### Step 3:
+### Step 3: Install Tailwind
+
+If you don't have node.js installed yet, you should install it first: see this tutorial for more information: [How to Install Node.js and NPM on Windows and Mac](https://radixweb.com/blog/installing-npm-and-nodejs-on-windows-and-mac#windows).
+
+After that, run:
+```
+npm install -D tailwindcss
+```
+
+### Step 4:
 Inside the virtual environment (with `(env)` indicated in the terminal input line), run:
 ```
 pip install -r requirements.txt
 ```
 
-### Step 4:
+### Step 5:
 Run the following commands:
 ```
 python manage.py makemigrations
 python manage.py migrate
-python manage.py import_restaurants
+python manage.py load_restaurants
 ```
 
-### Step 5:
+### Step 6:
+Run the server by running the following command:
 ```
 python manage.py runserver
 ```
-
