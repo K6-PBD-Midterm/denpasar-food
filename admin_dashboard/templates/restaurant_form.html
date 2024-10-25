@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">{% if form.instance.pk %}Edit Restaurant{% else %}Add Restaurant{% endif %}</h1>
+
+<!-- If image_url exists, display the image -->
+{% if form.instance.image_url %}
+    <div class="mb-6 text-center">
+        <img src="{{ form.instance.image_url }}" alt="{{ form.instance.name }}" class="mx-auto max-w-xs h-auto">
+    </div>
+{% endif %}
+
+<!-- Description for required fields -->
+<p class="text-sm text-gray-600 mb-4">Fields marked with a <span class="text-red-500">*</span> are required.</p>
+
+<div class="bg-white shadow-md rounded-lg p-6">
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+
+        <!-- Required Fields -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% for field in required_fields %}
+                <div>
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.help_text %}
+                        <p class="text-sm text-gray-600">{{ field.help_text }}</p>
+                    {% endif %}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <p class="text-sm text-red-600">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Description Field -->
+        <div class="mt-4">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+            {% if form.description.help_text %}
+                <p class="text-sm text-gray-600">{{ form.description.help_text }}</p>
+            {% endif %}
+            {% if form.description.errors %}
+                {% for error in form.description.errors %}
+                    <p class="text-sm text-red-600">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- Advanced Fields (Initially Hidden) -->
+        <div class="mt-6 flex items-center justify-between">
+            <!-- Conditional button for adding or modifying -->
+            {% if form.instance.pk %}
+                <button type="submit" class="px-4 py-2 bg-yellow-500 text-white rounded-lg">Save</button>
+            {% else %}
+                <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-lg">Add</button>
+            {% endif %}
+
+            <!-- Advanced Button -->
+            <button type="button" id="toggle-advanced" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Advanced</button>
+
+            <a href="{% url 'admin_dashboard:admin_dashboard_restaurant_list' %}" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg">Cancel</a>
+        </div>
+
+        <div id="advanced-fields" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 hidden">
+            <!-- Optional Fields -->
+            {% for field in optional_fields %}
+                <div>
+                    {{ field.label_tag }}
+                    {% if field.widget.input_type == 'textarea' %}
+                        <!-- Override Textarea to be a TextInput -->
+                        <input type="text" name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}" class="border border-gray-300 p-2 rounded-md w-full">
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                    {% if field.help_text %}
+                        <p class="text-sm text-gray-600">{{ field.help_text }}</p>
+                    {% endif %}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <p class="text-sm text-red-600">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </form>
+</div>
+
+<!-- JavaScript to toggle advanced fields -->
+<script>
+    document.getElementById('toggle-advanced').addEventListener('click', function() {
+        var advancedFields = document.getElementById('advanced-fields');
+        if (advancedFields.classList.contains('hidden')) {
+            advancedFields.classList.remove('hidden');
+            this.textContent = 'Hide Advanced';
+        } else {
+            advancedFields.classList.add('hidden');
+            this.textContent = 'Advanced';
+        }
+    });
+</script>
+{% endblock %}

@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'restaurants',
     'authentication',
+    'compressor',
+    'admin_dashboard',
+    'reviews',
 ]
 
 MIDDLEWARE = [
@@ -126,6 +129,11 @@ STATICFILES_DIRS = [
 
 
 
+COMPRESS_ROOT = BASE_DIR / 'static'
+
+COMPRESS_ENABLED = True
+
+STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 

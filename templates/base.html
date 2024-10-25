@@ -1,9 +1,15 @@
+{% load compress %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    {% endcompress %}
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""/>
@@ -12,19 +18,24 @@
     crossorigin=""></script>
     {% block map_meta %}{% endblock %}
     {% block title_meta %} {% endblock %}
-    <title>Bali Food Guide</title>
+    <title>{% block title %}Bali Food Guide{% endblock %}</title>
 </head>
 <body>
     <header>
         <div>
-            <h1>Denpasar Food Guide</h1>
+            <!-- Logic to toggle the Denpasar Food Guide link -->
+            {% if request.path == '/' %}
+                <h1><a href="{% url 'admin_dashboard:admin_dashboard_restaurant_list' %}">Denpasar Food Guide</a></h1>
+            {% else %}
+                <h1><a href="{% url 'restaurant_list' %}">Denpasar Food Guide</a></h1>
+            {% endif %}
         </div>
+        {% include 'navbar.html' %}
     </header>
 
     <main>
         {% block content %}{% endblock %}
      
     </main>
-
 </body>
 </html>

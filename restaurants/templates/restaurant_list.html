@@ -1,38 +1,96 @@
 {% extends 'base.html' %}
+<<<<<<< HEAD
 {% block title_meta %}<title>Restaurants in Denpasar - Bali Food Guide</title>{% endblock %}
+=======
+{% load static %}
+
+>>>>>>> main
 {% block content %}
-    <h2>Restaurants in Denpasar</h2>
-    
-    <!-- Debug information
-    <p>Number of restaurants: {{ page_obj.paginator.count }}</p>
-    <p>Page object: {{ page_obj }}</p>
-    <p>Is paginated: {{ is_paginated }}</p> -->
-    
-    <div>
-        {% for restaurant in page_obj %}
-            <p>Restaurant: {{ restaurant }}</p>
-            {% include "card.html" with restaurant=restaurant %}
+
+<div class="landing-page">
+    <div class="hero bg-cover bg-center h-[80vh] flex items-center justify-center relative" style="background-image: url('{% static 'images/restaurant-background.jpg' %}'); background-size: cover;">
+        <h1 class="text-white text-4xl font-bold">Denpasar Dine-In</h1>
+    </div>
+    <div id="search-container" class="sticky top-0 left-0 right-0 z-50 w-full p-4 transition-all duration-300">
+        <form id="search-form" method="get" action="{% url 'restaurant_list' %}" class="flex justify-center items-center max-w-screen-md mx-auto">
+            <div class="relative w-full">
+                <input type="text" name="search" placeholder="Search..." value="{{ request.GET.search }}" class="bg-white border border-white text-black placeholder-black text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 backdrop-blur-sm">
+            </div>
+        </form>
+    </div>
+
+<!-- Restaurant list container -->
+<div id="restaurant-list-container" class="container mx-auto mt-12 px-4">
+    <div class="flex flex-col space-y-4">  <!-- Use flexbox for vertical stacking -->
+        {% for restaurant in restaurants %}
+            <div class="bg-white shadow-md rounded-lg p-4 flex flex-row items-center">  <!-- Use flexbox for horizontal layout -->
+                {% include "card.html" with restaurant=restaurant %}
+            </div>
         {% empty %}
-            <p>No restaurants found.</p>
+            <p class="col-span-full text-center text-gray-500">No restaurants found.</p>
         {% endfor %}
     </div>
-    
+
     <!-- Pagination controls -->
     {% if is_paginated %}
-        <div>
-            <span>
-                {% if page_obj.has_previous %}
-                    <a href="?page=1">&laquo; first</a>
-                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                {% endif %}
-                <span>
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">next</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                {% endif %}
+        <div class="flex items-center justify-center mt-4 pb-4">  
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class="flex items-center justify-center px-3 h-8 mr-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 pagination-link">
+                    <svg class="w-3.5 h-3.5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4M1 5l4-4"/>
+                    </svg>
+                    First
+                </a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 pagination-link">Previous</a>
+            {% endif %}
+            <span class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
             </span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 pagination-link">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 pagination-link">
+                    Last
+                    <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                </a>
+            {% endif %}
         </div>
     {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function loadPage(url) {
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newContent = doc.getElementById('restaurant-list-container').innerHTML;
+                document.getElementById('restaurant-list-container').innerHTML = newContent;
+                attachPaginationHandlers();
+            })
+            .catch(error => console.error('Error loading page:', error));
+    }
+
+    function attachPaginationHandlers() {
+        document.querySelectorAll('.pagination-link').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                loadPage(this.href);
+            });
+        });
+    }
+
+    document.getElementById('search-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const queryString = new URLSearchParams(formData).toString();
+        loadPage(`?${queryString}`);
+    });
+
+    attachPaginationHandlers();
+});
+</script>
 {% endblock %}
