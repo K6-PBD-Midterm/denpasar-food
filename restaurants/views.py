@@ -5,7 +5,6 @@ from django.views.generic import ListView
 from .models import Restaurant
 from .forms import RestaurantFilterForm
 import logging
-from django.db.models import Q
 import random
 import json
 

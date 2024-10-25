@@ -1,7 +1,7 @@
 from django.urls import path
-from maps.views import show_map
+from maps.views import RestaurantMapView
 
 urlpatterns = [
-    path('', show_map, name='map'),  # URL for map
+    path('', RestaurantMapView.as_view(), name='map'),  
    
 ]
