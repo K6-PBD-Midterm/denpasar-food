@@ -21,6 +21,7 @@
         </p>
         <p><span class="font-semibold">Address:</span> {{ restaurant.address|default:"Not specified"|title }}</p>
         <p><span class="font-semibold">Phone:</span> {{ restaurant.phone|default:"Not specified"|title }}</p>
+        <p><span class="font-semibold">Price Range:</span> {{ restaurant.price_range|default:"Not specified"|title }}</p>
         {% if restaurant.website %}
             <p><span class="font-semibold">Website:</span> <a href="{{ restaurant.website }}" class="text-blue-500">{{ restaurant.website }}</a></p>
         {% endif %}
