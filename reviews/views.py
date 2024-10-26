@@ -18,3 +18,8 @@ def add_review(request, restaurant_id):
         form = ReviewForm()
     
     return render(request, 'add_review.html', {'form': form, 'restaurant': restaurant})
+
+def restaurant_detail(request, restaurant_id):
+    restaurant = get_object_or_404(Restaurant, id=restaurant_id)
+    reviews = restaurant.restaurant_reviews.all()  
+    return render(request, 'restaurant_detail.html', {'restaurant': restaurant, 'reviews': reviews})

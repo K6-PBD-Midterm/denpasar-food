@@ -9,5 +9,6 @@ urlpatterns = [
     path('auth/', include('authentication.urls')),  # Include authentication URLs
     path('admin-dashboard/', include('admin_dashboard.urls', namespace='admin_dashboard')),  # Include admin_dashboard with namespace
     path('reviews/', include('reviews.urls')),
-    path ('map/',include ('maps.urls')),
+    path('', include('restaurants.urls')),
+    path('map/', include('maps.urls')),
 ]

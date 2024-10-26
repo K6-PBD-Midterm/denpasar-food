@@ -1,7 +1,14 @@
 <h2 class="text-2xl font-bold mb-4">Reviews</h2>
 
-{% if restaurant.reviews.all %}
-    {% for review in restaurant.reviews.all %}
+<!-- Back to Home Button -->
+<div class="mb-4">
+    <a href="{% url 'restaurant_list' %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+        Back to Home
+    </a>
+</div>
+
+{% if reviews %}
+    {% for review in reviews %}
         <div class="border p-4 rounded-lg mb-4">
             <p class="font-semibold">Rating: {{ review.rating }} / 5</p>
             <p>{{ review.comment }}</p>
