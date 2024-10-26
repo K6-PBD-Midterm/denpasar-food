@@ -25,21 +25,12 @@
 </head>
 <body>
     <header class="fixed top-0 w-full z-50">
-        <div class="bg-white p-2">
-            <!-- Logic to toggle the Denpasar Food Guide link -->
-            {% if request.path == '/' %}
-                <h1 class="font-bold text-lg ml-4"><a href="{% url 'admin_dashboard:admin_dashboard_restaurant_list' %}">Denpasar Dine-In</a></h1>
-            {% else %}
-                <h1 class="font-bold text-lg ml-4"><a href="{% url 'restaurant_list' %}">Denpasar Dine-In</a></h1>
-            {% endif %}
-        </div>
-
         <div class=" border-t-2  border-gray-100 "></div>
         {% include 'navbar.html' %}
     </header>
 
     <main>
-        <div class="mt-24">
+        <div class="mt-14">
             {% block content %}{% endblock %}
         </div>
     </main>

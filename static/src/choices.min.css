@@ -1,7 +1,7 @@
 .choices {
     position: relative;
     overflow: hidden;
-    margin-bottom: 0px;
+    margin-bottom: 24px;
     font-size: 16px
 }
 
@@ -42,7 +42,7 @@
 }
 
 .choices[data-type*=select-one] .choices__input {
-    display: inside;
+    display: block;
     width: 100%;
     padding: 10px;
     border-bottom: 1px solid #ddd;
@@ -141,7 +141,7 @@
     vertical-align: top;
     width: 100%;
     background-color: #f9f9f9;
-    padding: 0px 0px 0px;
+    padding: 7.5px 7.5px 3.75px;
     border: 1px solid #ddd;
     border-radius: 2.5px;
     font-size: 14px;
@@ -191,7 +191,7 @@
     display: inline-block;
     vertical-align: middle;
     border-radius: 20px;
-    padding: 0px 0px;
+    padding: 4px 10px;
     font-size: 12px;
     font-weight: 500;
     margin-right: 3.75px;
@@ -232,6 +232,7 @@
     border: 1px solid #ddd;
     top: 100%;
     margin-top: -1px;
+    border-bottom-left-radius: 2.5px;
     border-bottom-right-radius: 2.5px;
     overflow: hidden;
     word-break: break-all
@@ -359,14 +360,14 @@
 
 .choices__input {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: baseline;
     background-color: #f9f9f9;
     font-size: 14px;
-    margin-bottom: 0px;
+    margin-bottom: 5px;
     border: 0;
     border-radius: 0;
     max-width: 100%;
-    padding: 0px 0px 0px 0px
+    padding: 4px 0 4px 2px
 }
 
 .choices__input::-webkit-search-cancel-button,

@@ -3,10 +3,11 @@
 
 {% block content %}
 
-<div class="landing-page min-h-screen flex flex-col">
+<div class="landing-page min-h-screen flex flex-col bg-[#f2f0ef]">
     <div class="hero bg-cover bg-center h-[80vh] flex items-center justify-center relative" style="background-image: url('{% static 'images/restaurant-background.jpg' %}'); background-size: cover;">
         <h1 class="text-white text-4xl font-bold">Denpasar Dine-In</h1>
     </div>
+    {% autoescape on %}
     <div id="search-container" class="sticky top-24 left-0 right-0 z-50 w-full p-4 transition-all duration-300 bg-[#f9f9f9]">
         <form id="search-form" method="get" action="{% url 'restaurant_list' %}" class="flex justify-center items-center max-w-screen-md mx-auto">
             <div class="relative w-full h-full">
@@ -22,6 +23,7 @@
             <button type="submit" class="bg-[#005f75] text-white p-2.5 rounded-r-lg font-sans">Filter</button>
         </form>
     </div>
+    {% endautoescape %}
     <!-- Restaurant list container -->
     <div id="restaurant-list-container" class="container mx-auto mt-12 px-4">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">  <!-- Use grid for layout -->
