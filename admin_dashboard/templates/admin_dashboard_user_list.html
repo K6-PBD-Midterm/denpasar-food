@@ -1,62 +1,83 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<h1 class="text-3xl font-bold mb-4">Admin Dashboard</h1>
+<div class="flex">
+    <!-- Sidebar -->
+    <aside class="bg-yellow-500 w-72 min-h-screen p-6 sticky top-0">
+        <h1 class="text-3xl font-bold text-black mb-10">Admin Dashboard</h1>
+        <nav class="space-y-6">
+            <a href="{% url 'admin_dashboard:admin_dashboard_user_list' %}" 
+               class="flex items-center justify-between text-black hover:font-bold hover:bg-yellow-600 p-3 rounded-lg {% if request.resolver_match.url_name == 'admin_dashboard_user_list' %}bg-yellow-600{% endif %}">
+                <span class="flex items-center">
+                    <img src="{% static 'images/user.png' %}" alt="User Icon" class="w-7 h-7 mr-4">
+                    <span class="text-lg">Users</span>
+                </span>
+                <span class="text-xl font-semibold">&gt;</span>
+            </a>
+            <a href="{% url 'admin_dashboard:admin_dashboard_restaurant_list' %}" 
+               class="flex items-center justify-between text-black hover:font-bold hover:bg-yellow-600 p-3 rounded-lg {% if request.resolver_match.url_name == 'admin_dashboard_restaurant_list' %}bg-yellow-600{% endif %}">
+                <span class="flex items-center">
+                    <img src="{% static 'images/restauranticon.png' %}" alt="Restaurant Icon" class="w-7 h-7 mr-4">
+                    <span class="text-lg">Restaurants</span>
+                </span>
+                <span class="text-xl font-semibold">&gt;</span>
+            </a>
+        </nav>
+    </aside>
 
-<!-- Navigation Links -->
-<div class="flex space-x-4 mb-4">
-    <a href="{% url 'admin_dashboard:admin_dashboard_restaurant_list' %}" class="px-4 py-2 bg-gray-200 rounded">Restaurants</a>
-    <a href="{% url 'admin_dashboard:admin_dashboard_user_list' %}" class="px-4 py-2 bg-gray-400 rounded">Users</a>
+    <!-- Main Content -->
+    <div class="flex-1 p-8">
+        <!-- Toolbar -->
+        <div class="flex items-center space-x-4 mb-4">
+            <!-- Batch Delete Form -->
+            <form id="batch-delete-form" method="post" action="{% url 'admin_dashboard:admin_dashboard_user_batch_delete' %}" class="flex items-center">
+                {% csrf_token %}
+                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded">Delete Selected</button>
+            </form>
+
+            <!-- Search Form -->
+            <form method="get" class="flex items-center">
+                <input type="text" name="q" placeholder="Search users..." value="{{ request.GET.q }}" class="border border-gray-300 p-2 rounded-md">
+                <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded">Search</button>
+            </form>
+
+            <!-- Add User button -->
+            <a href="{% url 'admin_dashboard:admin_dashboard_user_create' %}" class="px-4 py-2 bg-green-500 text-white rounded">Add User</a>
+        </div>
+
+        <!-- User List (Table) -->
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr>
+                    <th class="border p-4 text-left"><input type="checkbox" id="select-all"></th>
+                    <th class="border p-4 text-left">Username</th>
+                    <th class="border p-4 text-left">Email</th>
+                    <th class="border p-4 text-left">Active</th>
+                    <th class="border p-4 text-left">Admin</th>
+                    <th class="border p-4 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td class="border p-4">
+                        <input type="checkbox" name="user_ids" value="{{ user.id }}" form="batch-delete-form">
+                    </td>
+                    <td class="border p-4">{{ user.username }}</td>
+                    <td class="border p-4">{{ user.email }}</td>
+                    <td class="border p-4">{{ user.is_active|yesno:"Yes,No" }}</td>
+                    <td class="border p-4">{{ user.is_superuser|yesno:"Yes,No" }}</td>
+                    <td class="border p-4">
+                        <a href="{% url 'admin_dashboard:admin_dashboard_user_update' user.id %}" class="text-blue-500 hover:underline">Update</a>
+                        <a href="{% url 'admin_dashboard:admin_dashboard_user_delete' user.id %}" class="text-red-500 hover:underline">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
-
-<!-- Toolbar -->
-<div class="flex items-center space-x-4 mb-4">
-    <!-- Batch Delete Form -->
-    <form id="batch-delete-form" method="post" action="{% url 'admin_dashboard:admin_dashboard_user_batch_delete' %}" class="flex items-center">
-        {% csrf_token %}
-        <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded">Delete Selected</button>
-    </form>
-
-    <!-- Search Form -->
-    <form method="get" class="flex items-center">
-        <input type="text" name="q" placeholder="Search users..." value="{{ request.GET.q }}" class="border border-gray-300 p-2 rounded-md">
-        <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded">Search</button>
-    </form>
-
-    <!-- Add User button -->
-    <a href="{% url 'admin_dashboard:admin_dashboard_user_create' %}" class="px-4 py-2 bg-green-500 text-white rounded">Add User</a>
-</div>
-
-<!-- User List -->
-<table class="min-w-full bg-white">
-    <thead>
-        <tr>
-            <th class="border p-4 text-left"><input type="checkbox" id="select-all"></th>
-            <th class="border p-4 text-left">Username</th>
-            <th class="border p-4 text-left">Email</th>
-            <th class="border p-4 text-left">Active</th> <!-- Changed from 'Staff' to 'Active' -->
-            <th class="border p-4 text-left">Admin</th> <!-- Changed from 'Superuser' to 'Admin' -->
-            <th class="border p-4 text-left">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr>
-            <td class="border p-4">
-                <input type="checkbox" name="user_ids" value="{{ user.id }}" form="batch-delete-form">
-            </td>
-            <td class="border p-4">{{ user.username }}</td>
-            <td class="border p-4">{{ user.email }}</td>
-            <td class="border p-4">{{ user.is_active|yesno:"Yes,No" }}</td> <!-- Display 'Active' status -->
-            <td class="border p-4">{{ user.is_superuser|yesno:"Yes,No" }}</td> <!-- Display 'Admin' status -->
-            <td class="border p-4">
-                <a href="{% url 'admin_dashboard:admin_dashboard_user_update' user.id %}" class="text-blue-500 hover:underline">Update</a>
-                <a href="{% url 'admin_dashboard:admin_dashboard_user_delete' user.id %}" class="text-red-500 hover:underline">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
 
 <!-- JavaScript for Select All functionality -->
 <script>
