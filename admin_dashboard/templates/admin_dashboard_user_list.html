@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-4">Admin Dashboard</h1>
+
+<!-- Navigation Links -->
+<div class="flex space-x-4 mb-4">
+    <a href="{% url 'admin_dashboard:admin_dashboard_restaurant_list' %}" class="px-4 py-2 bg-gray-200 rounded">Restaurants</a>
+    <a href="{% url 'admin_dashboard:admin_dashboard_user_list' %}" class="px-4 py-2 bg-gray-400 rounded">Users</a>
+</div>
+
+<!-- Toolbar -->
+<div class="flex items-center space-x-4 mb-4">
+    <!-- Batch Delete Form -->
+    <form id="batch-delete-form" method="post" action="{% url 'admin_dashboard:admin_dashboard_user_batch_delete' %}" class="flex items-center">
+        {% csrf_token %}
+        <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded">Delete Selected</button>
+    </form>
+
+    <!-- Search Form -->
+    <form method="get" class="flex items-center">
+        <input type="text" name="q" placeholder="Search users..." value="{{ request.GET.q }}" class="border border-gray-300 p-2 rounded-md">
+        <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded">Search</button>
+    </form>
+
+    <!-- Add User button -->
+    <a href="{% url 'admin_dashboard:admin_dashboard_user_create' %}" class="px-4 py-2 bg-green-500 text-white rounded">Add User</a>
+</div>
+
+<!-- User List -->
+<table class="min-w-full bg-white">
+    <thead>
+        <tr>
+            <th class="border p-4 text-left"><input type="checkbox" id="select-all"></th>
+            <th class="border p-4 text-left">Username</th>
+            <th class="border p-4 text-left">Email</th>
+            <th class="border p-4 text-left">Active</th> <!-- Changed from 'Staff' to 'Active' -->
+            <th class="border p-4 text-left">Admin</th> <!-- Changed from 'Superuser' to 'Admin' -->
+            <th class="border p-4 text-left">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td class="border p-4">
+                <input type="checkbox" name="user_ids" value="{{ user.id }}" form="batch-delete-form">
+            </td>
+            <td class="border p-4">{{ user.username }}</td>
+            <td class="border p-4">{{ user.email }}</td>
+            <td class="border p-4">{{ user.is_active|yesno:"Yes,No" }}</td> <!-- Display 'Active' status -->
+            <td class="border p-4">{{ user.is_superuser|yesno:"Yes,No" }}</td> <!-- Display 'Admin' status -->
+            <td class="border p-4">
+                <a href="{% url 'admin_dashboard:admin_dashboard_user_update' user.id %}" class="text-blue-500 hover:underline">Update</a>
+                <a href="{% url 'admin_dashboard:admin_dashboard_user_delete' user.id %}" class="text-red-500 hover:underline">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- JavaScript for Select All functionality -->
+<script>
+    document.getElementById('select-all').addEventListener('click', function(event) {
+        var checkboxes = document.querySelectorAll('input[name="user_ids"]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = event.target.checked;
+        });
+    });
+</script>
+{% endblock %}

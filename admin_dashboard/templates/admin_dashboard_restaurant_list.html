@@ -3,6 +3,12 @@
 {% block content %}
 <h1 class="text-3xl font-bold mb-4">Admin Dashboard</h1>
 
+<!-- Navigation Links -->
+<div class="flex space-x-4 mb-4">
+    <a href="{% url 'admin_dashboard:admin_dashboard_restaurant_list' %}" class="px-4 py-2 bg-gray-200 rounded {% if request.resolver_match.url_name == 'admin_dashboard_restaurant_list' %}bg-gray-400{% endif %}">Restaurants</a>
+    <a href="{% url 'admin_dashboard:admin_dashboard_user_list' %}" class="px-4 py-2 bg-gray-200 rounded {% if request.resolver_match.url_name == 'admin_dashboard_user_list' %}bg-gray-400{% endif %}">Users</a>
+</div>
+
 <!-- Toolbar -->
 <div class="flex items-center space-x-4 mb-4">
     <!-- Batch Delete Form (Delete Selected button and checkboxes) -->

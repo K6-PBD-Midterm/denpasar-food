@@ -2,7 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from restaurants.models import Restaurant
 from .forms import RestaurantForm
-
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from .forms import UserForm
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -83,3 +85,55 @@ def admin_dashboard_restaurant_batch_delete(request):
 
 
 
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_dashboard_user_list(request):
+    query = request.GET.get('q')
+    if query:
+        users = User.objects.filter(username__icontains=query)
+    else:
+        users = User.objects.all()
+    return render(request, 'admin_dashboard_user_list.html', {'users': users})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_dashboard_user_create(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_dashboard:admin_dashboard_user_list')
+    else:
+        form = UserForm()
+    return render(request, 'user_form.html', {'form': form})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_dashboard_user_update(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_dashboard:admin_dashboard_user_list')
+    else:
+        form = UserForm(instance=user)
+    return render(request, 'user_form.html', {'form': form})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_dashboard_user_delete(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        user.delete()
+        return redirect('admin_dashboard:admin_dashboard_user_list')
+    return render(request, 'user_confirm_delete.html', {'user': user})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_dashboard_user_batch_delete(request):
+    if request.method == 'POST':
+        user_ids = request.POST.getlist('user_ids')
+        if user_ids:
+            User.objects.filter(id__in=user_ids).delete()
+        return redirect('admin_dashboard:admin_dashboard_user_list')
