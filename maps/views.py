@@ -20,36 +20,21 @@ class RestaurantMapView(TemplateView):
 
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = get_restaurants_in_denpasar()
         search = self.request.GET.get('search')
         search_by = self.request.GET.get('search_by', 'name')
 
         if search:
             if search_by == 'name':
-                queryset = queryset.filter(name__icontains=search)
-            elif search_by == 'cuisine':
-                queryset = queryset.filter(cuisine__icontains=search)
-        else :
-            queryset = get_restaurants_in_denpasar()
+                queryset = queryset.filter(name__icontains=search)    
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['restaurants'] = list(Restaurant.objects.values('name', 'cuisines', 'rating', 'latitude', 'longitude','price_range'))
-        return context
-
-def restaurant_list_ajax(request):
-    search_by = request.GET.get('search_by', 'name')
-    search_query = request.GET.get('search', '')
-    queryset = Restaurant.objects.all()
-
-    if search_query:
-        filter_kwargs = {f"{search_by}__icontains": search_query}
-        queryset = queryset.filter(**filter_kwargs)
-    context = {
-        'restaurants': queryset,
-    }
-    return render(request, 'map/map.html', context)
+        context['restaurants'] = list(self.get_queryset().values(
+            'name', 'cuisines', 'rating', 'latitude', 'longitude', 'price_range', 'image_url'
+        ))
+        return context  
 # Denpasar coordinates
 LATITUDE_MIN = -8.75
 LATITUDE_MAX = -8.55
