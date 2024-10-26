@@ -7,7 +7,7 @@
     <div class="hero bg-cover bg-center h-[80vh] flex items-center justify-center relative" style="background-image: url('{% static 'images/restaurant-background.jpg' %}'); background-size: cover;">
         <h1 class="text-white text-4xl font-bold">Denpasar Dine-In</h1>
     </div>
-    <div id="search-container" class="sticky top-24 left-0 right-0 z-50 w-full p-4 transition-all duration-300 bg-[#f9f9f9]">
+    <div id="search-container" class="sticky top-14 left-0 right-0 z-50 w-full p-4 transition-all duration-300 bg-[#f9f9f9]">
         <form id="search-form" method="get" action="{% url 'restaurant_list' %}" class="flex justify-center items-center max-w-screen-md mx-auto">
             <div class="relative w-full h-full">
                 <input type="text" name="search" placeholder="Search..." value="{{ request.GET.search }}" class="bg-white border border-gray-300 text-black placeholder-gray-500 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 font-sans">

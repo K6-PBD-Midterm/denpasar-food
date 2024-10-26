@@ -17,7 +17,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('login')  # Redirect to the login page after logout
+    return redirect('authentication:login')  # Redirect to the login page after logout
 
 def register_view(request):
     if request.method == 'POST':
@@ -25,7 +25,7 @@ def register_view(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Registration successful! You can now log in.')  # Optional success message
-            return redirect('login')  # Redirect to the login page after registration
+            return redirect('authentication:login')  # Redirect to the login page after registration
         else:
             messages.error(request, 'Registration failed. Please check your input.')  # Add this line for error handling
     else:
