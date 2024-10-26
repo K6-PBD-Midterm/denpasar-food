@@ -20,7 +20,7 @@ class RestaurantMapView(TemplateView):
 
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = get_restaurants_in_denpasar()
         search = self.request.GET.get('search')
         search_by = self.request.GET.get('search_by', 'name')
 
@@ -29,19 +29,19 @@ class RestaurantMapView(TemplateView):
                 queryset = queryset.filter(name__icontains=search)
             elif search_by == 'cuisine':
                 queryset = queryset.filter(cuisine__icontains=search)
-        else :
-            queryset = get_restaurants_in_denpasar()
+    
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['restaurants'] = list(Restaurant.objects.values('name', 'cuisines', 'rating', 'latitude', 'longitude','price_range'))
+        context['restaurants'] = list(get_restaurants_in_denpasar()
+        .values('name', 'cuisines', 'rating', 'latitude', 'longitude', 'price_range', 'image_url'))
         return context
 
 def restaurant_list_ajax(request):
     search_by = request.GET.get('search_by', 'name')
     search_query = request.GET.get('search', '')
-    queryset = Restaurant.objects.all()
+    queryset = get_restaurants_in_denpasar()
 
     if search_query:
         filter_kwargs = {f"{search_by}__icontains": search_query}

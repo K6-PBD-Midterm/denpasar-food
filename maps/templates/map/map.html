@@ -5,7 +5,6 @@
 {% endblock %}
 {% block content %}
 
-    <span> Map in progress ..... </span>
     {% if restaurants %}
     <div id="map_container">
         <div id="map"></div>
@@ -27,8 +26,22 @@
         const text = {'name': 'Batujimbar Cafe', 'cuisines': ['Cafe', 'European', 'Asian', 'Indonesian'], 'rating': 4.0, 'latitude': -8.695581, 'longitude': 115.26374, 'price_range': '$$ - $$$'}
         restaurantsData.forEach(restaurant => {
             const marker = L.marker([restaurant.latitude, restaurant.longitude]).addTo(map);
-            marker.bindPopup("<b>" + restaurant.name + "</b><br>" + restaurant.cuisines + "<br>Notation : " + restaurant.rating + "<br> Price : " + restaurant.price_range);
+            marker.bindPopup(`
+            <div>
+                <b> ${restaurant.name} </b>
+                <br>  
+                ${restaurant.cuisines} 
+                <br>
+                Notation :   ${restaurant.rating}
+                <br> 
+                Price :   ${restaurant.price_range} 
+            </div>
+                `);
+        if (restaurant.name == "Alchemy Uluwatu"){
+            //console.log("gggggggggggggg",restaurant)
+        }
         });
+
      
     </script>
 {% endblock %}
