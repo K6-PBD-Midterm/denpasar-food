@@ -17,11 +17,5 @@
         {{ form.as_p }}
         <button type="submit">Register</button>
     </form>
-<<<<<<< HEAD
-    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
-{% endblock %}
-=======
     <p>Already have an account? <a href="{% url 'authentication:login' %}">Login here</a></p>
-</body>
-</html>
->>>>>>> main
+{% endblock %}
