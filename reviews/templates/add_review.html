@@ -1,19 +1,66 @@
-<div class="container mx-auto px-4">
-    <h2 class="text-2xl font-bold mb-4">Review {{ restaurant.name }}</h2>
-    
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        
-        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Submit Review
-        </button>
-    </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review {{ restaurant.name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-F2F0EF flex">
 
-    <!-- Back to Home Page Button -->
-    <div class="mt-4">
-        <a href="{% url 'restaurant_list' %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-            Back to Home Page
+    <!-- Sidebar -->
+    <aside class="bg-yellow-300 w-1/6 h-screen flex flex-col items-center py-4 ml-2 mt-2 mb-2 rounded-lg">
+        <button class="mb-4">
+            <!-- Menu Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+        <a href="{% url 'restaurant_list' %}" class="mb-4">
+            <!-- Home Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-9 0v8h4v-8m-7 8h14"/>
+            </svg>
         </a>
-    </div>
-</div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="w-5/6 p-8 ml-[-2rem]">
+
+        <!-- Username at top-right -->
+        <div class="flex justify-end text-gray-600 mb-4">
+            Welcome, {{ request.user.username }}
+        </div>
+
+        <!-- Image Placeholder -->
+        <div class="bg-gray-300 h-48 w-full mb-6 rounded-lg flex items-center justify-center text-gray-500">
+            Restaurant Image
+        </div>
+
+        <!-- Review Form Card -->
+        <div class="shadow-none p-0 max-w-3xl ml-0">
+            <h1 class="text-2xl font-bold mb-4 text-left">Review {{ restaurant.name }}</h1>        
+
+            <form method="POST" class="space-y-4">
+                {% csrf_token %}
+                
+                <div class="flex flex-col mb-4">
+                    <label for="rating" class="font-semibold text-gray-700">Rating</label>
+                    {{ form.rating }}
+                </div>
+
+                <div class="flex flex-col mb-4">
+                    <label for="comment" class="font-semibold text-gray-700">Comment</label>
+                    {{ form.comment }}
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg">
+                        Submit Review
+                    </button>
+                </div>
+            </form>
+        </div>
+    
+</body>
+</html>
