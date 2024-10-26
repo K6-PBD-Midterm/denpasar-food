@@ -24,8 +24,12 @@
         {% if restaurant.website %}
             <p><span class="font-semibold">Website:</span> <a href="{{ restaurant.website }}" class="text-blue-500">{{ restaurant.website }}</a></p>
         {% endif %}
+
     </div>
     <div class="mt-auto pt-4 w-full"> <!-- Adds margin top auto for spacing -->
-        <a href="{% url 'add_review' restaurant.id %}" class="text-blue-500 hover:underline">Add a review</a>
+        <a href="{% url 'add_review' restaurant.id %}" class="bg-[#846496] text-white py-1 px-2 rounded-lg hover:bg-[#6e4f7c] transition duration-300">Add a review</a>
+        {% if restaurant.latitude and restaurant.longitude %}
+            <a href="https://www.google.com/maps/search/?api=1&query={{ restaurant.name }}&{{ restaurant.latitude}}%{{ rstaurant.longitude}}" target="_blank" class="bg-[#846496] text-white py-1 px-4 rounded-lg hover:bg-[#6e4f7c] transition duration-300 ml-2">View on Google</a>
+        {% endif %}
     </div>
 </div>
