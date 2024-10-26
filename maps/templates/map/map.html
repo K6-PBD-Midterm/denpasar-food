@@ -3,59 +3,58 @@
 {% block map_meta %}
 <link rel="stylesheet" href="{% static 'map/css/styles.css' %}"/>
 {% endblock %}
+
 {% block content %}
+<div id="search-container" class="sticky top-0 left-0 right-0 z-50 w-full py-4 bg-[#f9f9f9] shadow-lg">
+    <form id="search-form" method="get" action="{% url 'map' %}" class="flex justify-center items-center max-w-screen-md mx-auto">
+        <div class="relative w-full">
+            <input type="text" name="search" placeholder="Search for restaurants..." value="{{ request.GET.search }}" class="bg-white border border-gray-300 text-gray-700 placeholder-gray-500 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 shadow-md">
+        </div>
+        <button type="submit" class="bg-[#005f75] text-white px-4 py-2 rounded-r-lg shadow-md hover:bg-[#004a5a] transition duration-300">
+            Search
+        </button>
+    </form>
+</div>
 
-    <div id="search-container" class="sticky top-24 left-0 right-0 z-50 w-full p-4 transition-all duration-300 bg-[#f9f9f9] shadow-md">
-        <form id="search-form" method="get" action="{% url 'map' %}" class="flex justify-center items-center max-w-screen-md mx-auto">
-            <div class="relative w-full h-full">
-                <input type="text" name="search" placeholder="Search..." value="{{ request.GET.search }}" class="bg-white border border-gray-300 text-black placeholder-gray-500 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 font-sans shadow-sm">
-            </div>
-            <button type="submit" class="bg-[#005f75] text-white p-2.5 rounded-r-lg font-sans shadow-md hover:bg-[#004a5a] transition duration-300">Search</button>
-        </form>
-    </div>
-    {% if restaurants %}
-    <div id="map_container" class="mt-6">
-        <div id="map" class="w-full h-[600px] rounded-lg shadow-lg"></div>
-    </div>
-    {% else %}
-    <div id="map_container" class="mt-6">
-        <div id="map" class="w-full h-[600px] rounded-lg shadow-lg"></div>
-        <script>
-            var map = L.map('map').setView([-8.670458, 115.212629], 13); // Coordinates for Denpasar, Bali
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-            L.popup()
-                .setLatLng([-8.670458, 115.212629])
-                .setContent('No restaurants found')
-                .openOn(map);
-        </script>
-    {% endif %}
+{% if restaurants %}
+<div id="map_container" class="mt-6 px-4">
+    <div id="map" class="w-full h-[600px] rounded-lg overflow-hidden shadow-lg"></div>
+</div>
+{% else %}
+<div id="map_container" class="mt-6 px-4">
+    <div id="map" class="w-full h-[600px] rounded-lg overflow-hidden shadow-lg"></div>
     <script>
-
-        var map = L.map('map').setView([-8.670458, 115.212629], 13); // Coordinates for Denpasar, Bali
-
+        var map = L.map('map').setView([-8.670458, 115.212629], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-        
-        const restaurantsData = {{ restaurants|safe }};
-        restaurantsData.forEach(restaurant => {
+        L.popup().setLatLng([-8.670458, 115.212629])
+            .setContent('No restaurants found')
+            .openOn(map);
+    </script>
+{% endif %}
+
+<script>
+    var map = L.map('map').setView([-8.670458, 115.212629], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    const restaurantsData = {{ restaurants|safe }};
+    restaurantsData.forEach(restaurant => {
         const marker = L.marker([restaurant.latitude, restaurant.longitude]).addTo(map);
         marker.bindPopup(`
-             <div class="flex items-center">
-                <img src="${restaurant.image_url}" alt="${restaurant.name}" class="w-12 h-12 object-cover mr-4 rounded-lg shadow-md">
+            <div class="flex items-center">
+                <img src="${restaurant.image_url}" alt="${restaurant.name}" class="w-12 h-12 object-cover mr-4 rounded-md shadow">
                 <div>
-                    <b class="text-lg font-semibold">${restaurant.name}</b><br>
-                    <ul class="list-disc list-inside">${restaurant.cuisines.map(cuisine => `<li>${cuisine}</li>`).join('')}</ul>
-                    <span class="block mt-1">Notation : ${restaurant.rating}</span>
-                    <span class="block">Price : ${restaurant.price_range}</span>
+                    <h3 class="text-lg font-semibold">${restaurant.name}</h3>
+                    <p class="text-sm">${restaurant.cuisines.join(', ')}</p>
+                    <span class="block mt-1">Rating: ${restaurant.rating}</span>
+                    <span class="block">Price: ${restaurant.price_range}</span>
                 </div>
             </div>
-                `);
-        });
-
-     
-    </script>
+        `);
+    });
+</script>
 {% endblock %}
