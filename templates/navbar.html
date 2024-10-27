@@ -22,6 +22,7 @@
                 {% if user.is_authenticated %}
                     <span class="text-gray-700">Welcome, {{ user.username }}!</span>
                     <a href="{% url 'authentication:logout' %}" class="text-blue-600 hover:text-blue-800">Logout</a>
+                    <a href="{% url 'authentication:user_customization' %}" class="text-blue-600 hover:text-blue-800">Customize</a>
                 {% else %}
                     <a href="{% url 'authentication:login' %}" class="text-blue-600 hover:text-blue-800">Login</a>
                     <a href="{% url 'authentication:register' %}" class="text-blue-600 hover:text-blue-800">Register</a>
