@@ -1,12 +1,28 @@
+<!-- restaurant_detail.html -->
 <h2 class="text-2xl font-bold mb-4">Reviews</h2>
 
-<!-- Back to Home Button -->
-<div class="mb-4">
-    <a href="{% url 'restaurant_list' %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-        Back to Home
-    </a>
-</div>
+<!-- Like and Dislike Buttons -->
+{% if user.is_authenticated %}
+    <div class="flex space-x-4 mb-4">
+        <!-- Like Button -->
+        <form action="{% url 'like_restaurant' restaurant.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Like
+            </button>
+        </form>
 
+        <!-- Dislike Button -->
+        <form action="{% url 'dislike_restaurant' restaurant.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                Dislike
+            </button>
+        </form>
+    </div>
+{% endif %}
+
+<!-- Reviews Section -->
 {% if reviews %}
     {% for review in reviews %}
         <div class="border p-4 rounded-lg mb-4">

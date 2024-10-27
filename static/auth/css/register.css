@@ -1,0 +1,179 @@
+@import url('https://rsms.me/inter/inter-ui.css');
+
+/* Selection styles */
+::selection { 
+    background: #2D2F36;
+}
+::-webkit-selection { 
+    background: #2D2F36; 
+}
+::-moz-selection { 
+    background: #2D2F36; 
+}
+
+/* General body styles with background image */
+body { 
+    background: url('https://images.unsplash.com/photo-1508857148929-3a9b41be6c0e?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXV0dW1uJTIwdHJlZXxlbnwwfHwwfHx8MA%3D%3D') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Inter UI', sans-serif; 
+    margin: 0; 
+    padding: 20px; 
+}
+
+/* Page layout with transparent background */
+.page { 
+    background: transparent; 
+    display: flex; 
+    flex-direction: column; 
+    height: calc(100% - 40px); 
+    position: absolute; 
+    place-content: center; 
+    width: calc(100% - 40px); 
+}
+
+/* Responsive styles for page */
+@media (max-width: 767px) { 
+    .page { 
+        height: auto; 
+        margin-bottom: 20px; 
+        padding-bottom: 20px; 
+    } 
+}
+
+/* Container styles */
+.container { 
+    display: flex; 
+    height: 400px; 
+    margin: 0 auto; 
+    width: 640px; 
+}
+
+/* Responsive styles for container */
+@media (max-width: 767px) { 
+    .container { 
+        flex-direction: column; 
+        height: 650px; 
+        width: 320px; 
+    } 
+}
+
+/* Left section styles */
+.left { 
+    background: #f5f5dc; 
+    height: calc(100% - 40px); 
+    top: 20px; 
+    position: relative; 
+    width: 50%; 
+}
+
+/* Responsive styles for left section */
+@media (max-width: 767px) { 
+    .left { 
+        height: 100%; 
+        left: 20px; 
+        width: calc(100% - 40px); 
+        max-height: 270px; 
+    } 
+}
+
+/* Header styles */
+.register { 
+    font-size: 50px; 
+    font-weight: 900; 
+    margin: 50px 40px 40px; 
+}
+
+/* EULA styles */
+.eula { 
+    color: #999; 
+    font-size: 14px; 
+    line-height: 1.5; 
+    margin: 40px; 
+}
+
+/* Right section styles */
+.right { 
+    background: #562B00 ; 
+    box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22); 
+    color: #F1F1F2; 
+    position: relative; 
+    width: 50%; 
+    padding-bottom: 20px;
+}
+
+/* Responsive styles for right section */
+@media (max-width: 767px) { 
+    .right { 
+        flex-shrink: 0; 
+        height: 100%; 
+        width: 100%; 
+        max-height: 350px; 
+    } 
+}
+
+/* SVG styles */
+svg { 
+    position: absolute; 
+    width: 320px; 
+}
+path { 
+    fill: none; 
+    stroke: url(#linearGradient); 
+    stroke-width: 4; 
+    stroke-dasharray: 240 1386; 
+}
+
+/* Form styles */
+.form { 
+    margin: 40px; 
+    position: absolute; 
+    width: calc(100% - 80px); 
+}
+label { 
+    color:  #c2c2c5; 
+    display: block; 
+    font-size: 14px; 
+    margin-top: 10px; 
+    margin-bottom: 5px; 
+}
+input { 
+    background: transparent; 
+    border: 0; 
+    color: #f2f2f2; 
+    font-size: 20px; 
+    height: 30px; 
+    line-height: 30px; 
+    outline: none !important; 
+    width: 100%; 
+    margin-bottom: 15px; 
+}
+input::-moz-focus-inner { 
+    border: 0; 
+}
+
+/* Submit button styles */
+#submit { 
+    color: #707075; 
+    margin-top: 15px; 
+    transition: color 300ms; 
+    display: block; 
+    width: 100%; 
+    padding: 4px; 
+}
+#submit:focus { 
+    color: #f2f2f2; 
+}
+#submit:active { 
+    color: #d0d0d2; 
+}
+
+/* Error message styles */
+.error { 
+    color: red; 
+    margin-top: 20px; 
+}
+
+/* Confirm password label styles */
+.confirm-password-label { 
+    margin-top: 5px; 
+}

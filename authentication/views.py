@@ -1,7 +1,9 @@
+# views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .forms import CustomUserCreationForm  # Import your custom form
 
 def login_view(request):
     if request.method == 'POST':
@@ -21,13 +23,19 @@ def logout_view(request):
 
 def register_view(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)  # Use your custom form here
         if form.is_valid():
             form.save()
-            messages.success(request, 'Registration successful! You can now log in.')  # Optional success message
+            messages.success(request, 'Registration successful! You can now log in.')
             return redirect('authentication:login')  # Redirect to the login page after registration
         else:
-            messages.error(request, 'Registration failed. Please check your input.')  # Add this line for error handling
+            # If the form is not valid, it will display the specific error messages
+            messages.error(request, 'Registration failed. Please try a longer password.')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()  # Use your custom form here
     return render(request, 'authentication/register.html', {'form': form})
+
+@login_required
+def user_customization(request):
+    user_reviews = request.user.review_set.all()  
+    return render(request, 'authentication/user_customization.html', {'user_reviews': user_reviews})

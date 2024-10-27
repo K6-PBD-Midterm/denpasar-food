@@ -1,21 +1,47 @@
-{% extends 'base.html' %}
-{% block title_meta %}
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'auth/css/register.css' %}">
 </head>
-{% endblock title_meta %}
+<body>
 
-{% block content %}
-    <h2>Register</h2>
-    {% if messages %}
-        {% for message in messages %}
-            <div>{{ message }}</div>
-        {% endfor %}
-    {% endif %}
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
-    <p>Already have an account? <a href="{% url 'authentication:login' %}">Login here</a></p>
-{% endblock %}
+<div class="page">
+    <div class="container">
+        <div class="left">
+            <div class="register">Register</div>
+            <div class="eula">
+                Already have an account? 
+                <a href="{% url 'authentication:login' %}">Login here</a>
+                {% if messages %}
+                    <div class="error">
+                        <h2>Error:</h2>
+                        <ul>
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="right">
+            <form method="POST" class="form">
+                {% csrf_token %}
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password1" required>
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="password2" required>
+                <input type="submit" id="submit" value="Register">
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

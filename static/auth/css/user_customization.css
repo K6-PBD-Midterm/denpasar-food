@@ -1,0 +1,35 @@
+/* user_customization.css */
+
+.customization-container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    background-color: #fffcd8;
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.profile-section, .info-section, .review-section {
+    margin: 20px 0;
+}
+
+.profile-pic {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #562B00;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background-color: #3e1e00;
+}
