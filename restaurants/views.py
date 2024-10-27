@@ -55,6 +55,5 @@ class RestaurantListView(ListView):
         
         return context
 
-
 def restaurant_list_ajax(request):
     return render(request, 'restaurant_list.html', context)
