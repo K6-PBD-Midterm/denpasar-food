@@ -10,18 +10,18 @@
         <div class="relative w-full">
             <input type="text" name="search" placeholder="Search for restaurants..." value="{{ request.GET.search }}" class="bg-white border border-gray-300 text-gray-700 placeholder-gray-500 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 shadow-md">
         </div>
-        <button type="submit" class="bg-[#005f75] text-white px-4 py-2 rounded-r-lg shadow-md hover:bg-[#004a5a] transition duration-300">
+        <button type="submit" class="bg-[#005f75] text-white px-4 py-2 rounded-r-lg shadow-md hover:bg-[#004a5a] transition duration-300 z-50">
             Search
         </button>
     </form>
 </div>
 
 {% if restaurants %}
-<div id="map_container" class="mt-6 px-4">
+<div id="map_container" class="mt-6 px-4 relative z-1">
     <div id="map" class="w-full h-[600px] rounded-lg overflow-hidden shadow-lg"></div>
 </div>
 {% else %}
-<div id="map_container" class="mt-6 px-4">
+<div id="map_container" class="mt-6 px-4 relative z-1">
     <div id="map" class="w-full h-[600px] rounded-lg overflow-hidden shadow-lg"></div>
     <script>
         var map = L.map('map').setView([-8.670458, 115.212629], 13);
@@ -45,13 +45,13 @@
     restaurantsData.forEach(restaurant => {
         const marker = L.marker([restaurant.latitude, restaurant.longitude]).addTo(map);
         marker.bindPopup(`
-            <div class="flex items-center">
-                <img src="${restaurant.image_url}" alt="${restaurant.name}" class="w-12 h-12 object-cover mr-4 rounded-md shadow">
-                <div>
+           <div class="flex items-center w-full max-w-full space-x-4 overflow-hidden">
+                <img src="${restaurant.image_url}" alt="${restaurant.name}" class="w-16 h-16 object-cover rounded-md shadow">
+                <div class="info_container flex-1">
                     <h3 class="text-lg font-semibold">${restaurant.name}</h3>
-                    <p class="text-sm">${restaurant.cuisines.join(', ')}</p>
-                    <span class="block mt-1">Rating: ${restaurant.rating}</span>
-                    <span class="block">Price: ${restaurant.price_range}</span>
+                    <span class="text-sm italic">${restaurant.cuisines.join(', ')}</span>
+                    <span class="block mt-1">Rating: <b>${restaurant.rating}</b></span>
+                    <span class="block">Price: <b>${restaurant.price_range}</b></span>
                 </div>
             </div>
         `);
