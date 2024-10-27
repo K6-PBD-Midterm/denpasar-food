@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Customization</title>
+    <link rel="stylesheet" href="{% static 'auth/css/user_customization.css' %}">
+</head>
+<body>
+    <div class="customization-container">
+        <h1>Welcome, {{ request.user.username }}!</h1>
+        
+        <div class="profile-section">
+            <h2>Profile Picture</h2>
+            <img src="{{ request.user.profile_picture.url }}" alt="Profile Picture" class="profile-pic">
+        </div>
+
+        <div class="info-section">
+            <h2>Username: {{ request.user.username }}</h2>
+        </div>
+
+        <div class="review-section">
+            <h2>Your Reviews</h2>
+            <ul>
+                {% for review in user_reviews %}
+                    <li>{{ review.content }} - <a href="{% url 'edit_review' review.id %}">Edit</a></li>
+                {% endfor %}
+            </ul>
+            <a href="" class="btn">Add Review</a>
+        </div>
+    </div>
+</body>
+</html>
