@@ -1,36 +1,67 @@
-<!-- restaurant_detail.html -->
-<h2 class="text-2xl font-bold mb-4">Reviews</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-F2F0EF min-h-screen">
 
-<!-- Like and Dislike Buttons -->
-{% if user.is_authenticated %}
-    <div class="flex space-x-4 mb-4">
-        <!-- Like Button -->
-        <form action="{% url 'like_restaurant' restaurant.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                Like
-            </button>
-        </form>
+    <!-- Navbar -->
+    {% include 'navbar.html' %}
 
-        <!-- Dislike Button -->
-        <form action="{% url 'dislike_restaurant' restaurant.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                Dislike
-            </button>
-        </form>
+    <!-- Main Content -->
+    <div class="container mx-auto p-8">
+
+        <!-- Reviews Section -->
+        <h2 class="text-2xl font-bold mb-4">Reviews</h2>
+
+        <!-- Reviews Section -->
+        {% if reviews %}
+            {% for review in reviews %}
+                <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                    <!-- Username -->
+                    <p class="font-bold text-lg mb-1">{{ review.user.username }}</p>
+                    
+                    <!-- Star Rating -->
+                    <div class="flex items-center mb-4">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= review.rating %}
+                                <!-- Filled Star -->
+                                <svg class="w-5 h-5 text-yellow-400 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                                </svg>
+                            {% else %}
+                                <!-- Empty Star -->
+                                <svg class="w-5 h-5 text-gray-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                                </svg>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <!-- Comment Section -->
+                    <div style="background-color: rgba(128, 128, 128, 0.3);" class="rounded-lg p-4 mb-2">
+                        <p>{{ review.comment }}</p>
+                    </div>
+
+                    <!-- Date Written -->
+                    <p class="text-sm text-gray-500">*{{ review.created_at }}*</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No reviews yet. Be the first to <a href="{% url 'add_review' restaurant.id %}" class="text-blue-500">leave a review</a>.</p>
+        {% endif %}
     </div>
-{% endif %}
+    
+    <!-- Back to Home Link -->
+    <div class="mt-6">
+        <a href="{% url 'restaurant_list' %}" class="text-blue-500 hover:underline">
+            Back to Home
+        </a>
+    </div>
+</div>
 
-<!-- Reviews Section -->
-{% if reviews %}
-    {% for review in reviews %}
-        <div class="border p-4 rounded-lg mb-4">
-            <p class="font-semibold">Rating: {{ review.rating }} / 5</p>
-            <p>{{ review.comment }}</p>
-            <p class="text-sm text-gray-500">Reviewed by {{ review.user.username }} on {{ review.created_at }}</p>
-        </div>
-    {% endfor %}
-{% else %}
-    <p>No reviews yet. Be the first to <a href="{% url 'add_review' restaurant.id %}" class="text-blue-500">leave a review</a>.</p>
-{% endif %}
+</body>
+</html>
