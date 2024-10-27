@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-xq_43l3s$+nl)h%s%zo5us-#8d1!!4e2m)i=!k=l=ayhug)p(h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True  # Change to False in production
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "isaac-jesse-denpasarfood.pbp.cs.ui.ac.id", ".vercel.app", ".now.sh"]
 
@@ -61,7 +61,7 @@ ROOT_URLCONF = 'denpasar_food.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates',BASE_DIR / 'authentication/templates',BASE_DIR / 'maps/templates'],
+        'DIRS': [BASE_DIR / 'templates', BASE_DIR / 'authentication/templates', BASE_DIR / 'maps/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,11 +123,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Commented out to avoid using a separate staticfiles directory
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'static'),  # This points to your existing static directory
 ]
-
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 COMPRESS_ROOT = BASE_DIR / 'static'
@@ -135,6 +134,7 @@ COMPRESS_ROOT = BASE_DIR / 'static'
 COMPRESS_ENABLED = True
 
 STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
