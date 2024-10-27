@@ -10,7 +10,7 @@
     background: #2D2F36;
 }
 body {
-    background: url('https://img.freepik.com/free-vector/detailed-autumn-background_23-2149040182.jpg') no-repeat center center fixed;
+    background: url('https://images.unsplash.com/photo-1508857148929-3a9b41be6c0e?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXV0dW1uJTIwdHJlZXxlbnwwfHwwfHx8MA%3D%3D') no-repeat center center fixed;
     background-size: cover;
     font-family: 'Inter UI', sans-serif;
     margin: 0;
@@ -131,4 +131,8 @@ input::-moz-focus-inner {
 }
 #submit:active {
     color: #d0d0d2;
+}
+.error { 
+    color: red; 
+    margin-top: 20px; 
 }
