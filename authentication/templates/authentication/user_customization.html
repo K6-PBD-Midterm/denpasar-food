@@ -31,7 +31,7 @@
                             <p class="review-date">Reviewed by {{ review.user.username }} on {{ review.created_at|date:"F j, Y, g:i a" }}</p>
                             <div class="like-dislike">
                                 <a href="{% url 'like_restaurant' review.restaurant.id %}">Like</a> | 
-                                <a href="{% url 'dislike_restaurant' review.restaurant.id %}">Dislike</a>
+                                <!-- Removed the Dislike link -->
                             </div>
                         </div>
                     </li>
