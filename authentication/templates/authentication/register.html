@@ -29,15 +29,6 @@
             </div>
         </div>
         <div class="right">
-            <svg viewBox="0 0 320 300">
-                <defs>
-                    <linearGradient id="linearGradient" x1="13" y1="193.5" x2="307" y2="193.5" gradientUnits="userSpaceOnUse">
-                        <stop style="stop-color:#4000ff;" offset="0"/>
-                        <stop style="stop-color:#af00ff;" offset="1"/>
-                    </linearGradient>
-                </defs>
-                <path d="M 40,120 L 280,120 c 0,0 25,0 25,35 s-25,35 -25,35 H 40 c 0,0 -25,0 -25,35 s25,35 25,35 h 215 c 0,0 20,0 20,-25 s-20,-25 -20,-25 h -190 c 0,0 -20,0 -20,25 s20,25 20,25 h 170"/>
-            </svg>
             <form method="POST" class="form">
                 {% csrf_token %}
                 <label for="username">Username</label>
@@ -51,43 +42,6 @@
         </div>
     </div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
-<script>
-    var current = null;
-    document.querySelector('#username').addEventListener('focus', function(e) {
-        if (current) current.pause();
-        current = anime({
-            targets: 'path',
-            strokeDashoffset: { value: 0, duration: 700, easing: 'easeOutQuart' },
-            strokeDasharray: { value: '240 1386', duration: 700, easing: 'easeOutQuart' }
-        });
-    });
-    document.querySelector('#password').addEventListener('focus', function(e) {
-        if (current) current.pause();
-        current = anime({
-            targets: 'path',
-            strokeDashoffset: { value: -336, duration: 700, easing: 'easeOutQuart' },
-            strokeDasharray: { value: '240 1386', duration: 700, easing: 'easeOutQuart' }
-        });
-    });
-    document.querySelector('#confirm-password').addEventListener('focus', function(e) {
-        if (current) current.pause();
-        current = anime({
-            targets: 'path',
-            strokeDashoffset: { value: -664, duration: 700, easing: 'easeOutQuart' },
-            strokeDasharray: { value: '240 1386', duration: 700, easing: 'easeOutQuart' }
-        });
-    });
-    document.querySelector('#submit').addEventListener('focus', function(e) {
-        if (current) current.pause();
-        current = anime({
-            targets: 'path',
-            strokeDashoffset: { value: -730, duration: 700, easing: 'easeOutQuart' },
-            strokeDasharray: { value: '530 1386', duration: 700, easing: 'easeOutQuart' }
-        });
-    });
-</script>
 
 </body>
 </html>
