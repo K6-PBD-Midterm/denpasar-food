@@ -53,7 +53,7 @@ class RestaurantForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(RestaurantForm, self).__init__(*args, **kwargs)
-        required_fields = ['id', 'name', 'latitude', 'longitude', 'cuisines', 'website', 'phone', 'address']
+        required_fields = ['id', 'name', 'latitude', 'longitude', 'cuisines', 'phone', 'address']
         for field_name in required_fields:
             self.fields[field_name].required = True
 
