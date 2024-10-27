@@ -3,25 +3,27 @@
 
 {% block content %}
 
-<div class="landing-page">
+<div class="landing-page min-h-screen flex flex-col bg-[#f2f0ef]">
     <div class="hero bg-cover bg-center h-[80vh] flex items-center justify-center relative" style="background-image: url('{% static 'images/restaurant-background.jpg' %}'); background-size: cover;">
         <h1 class="text-white text-4xl font-bold">Denpasar Dine-In</h1>
     </div>
-    <div id="search-container" class="sticky top-24 left-0 right-0 z-50 w-full p-4 transition-all duration-300">
+    {% autoescape on %}
+    <div id="search-container" class="sticky top-16 left-0 right-0 z-50 w-full p-4 transition-all duration-300 bg-[#f9f9f9]">
         <form id="search-form" method="get" action="{% url 'restaurant_list' %}" class="flex justify-center items-center max-w-screen-md mx-auto">
-            <div class="relative w-full">
+            <div class="relative w-full h-full">
                 <input type="text" name="search" placeholder="Search..." value="{{ request.GET.search }}" class="bg-white border border-gray-300 text-black placeholder-gray-500 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 font-sans">
             </div>
             <div class="relative w-full">
-                <select name="cuisines" multiple class="select2 bg-white border border-gray-300 text-black placeholder-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 font-sans">
+                <select name="cuisines" multiple class="bg-white border border-gray-300 text-black placeholder-gray-500 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 font-sans h-40">
                     {% for cuisine in all_cuisines %}
                         <option value="{{ cuisine }}" {% if cuisine in request.GET.cuisines %}selected{% endif %}>{{ cuisine }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <button type="submit" class="bg-blue-500 text-white p-2.5 rounded-lg font-sans">Filter</button>
+            <button type="submit" class="bg-[#005f75] text-white p-2.5 rounded-r-lg font-sans">Filter</button>
         </form>
     </div>
+    {% endautoescape %}
     <!-- Restaurant list container -->
     <div id="restaurant-list-container" class="container mx-auto mt-12 px-4">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">  <!-- Use grid for layout -->
@@ -60,8 +62,7 @@
                 {% endif %}
             </div>
         {% endif %}
-    </div>
-
+   </div>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         function loadPage(url) {
@@ -95,11 +96,13 @@
 
         attachPaginationHandlers();
 
-        // Initialize Select2
-        $('.select2').select2({
-            placeholder: "Select cuisines",
-            allowClear: true
+        // Initialize Choices.js
+        const element = document.querySelector('select[name="cuisines"]');
+        const choices = new Choices(element, {
+            removeItemButton: true,
+            placeholderValue: 'Select Cuisine',
+            searchPlaceholderValue: 'Search Cuisine'
         });
     });
-    </script>
+    </script> 
 {% endblock %}
