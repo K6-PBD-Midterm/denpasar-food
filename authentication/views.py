@@ -1,7 +1,9 @@
+# views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 def login_view(request):
     if request.method == 'POST':
@@ -24,10 +26,15 @@ def register_view(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Registration successful! You can now log in.')  # Optional success message
+            messages.success(request, 'Registration successful! You can now log in.')
             return redirect('authentication:login')  # Redirect to the login page after registration
         else:
-            messages.error(request, 'Registration failed. Please check your input.')  # Add this line for error handling
+            messages.error(request, 'Registration failed. Please check your input.')
     else:
         form = UserCreationForm()
     return render(request, 'authentication/register.html', {'form': form})
+
+@login_required
+def user_customization(request):
+    user_reviews = request.user.review_set.all()  
+    return render(request, 'authentication/user_customization.html', {'user_reviews': user_reviews})
