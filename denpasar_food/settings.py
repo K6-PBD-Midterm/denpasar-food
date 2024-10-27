@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-xq_43l3s$+nl)h%s%zo5us-#8d1!!4e2m)i=!k=l=ayhug)p(h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "isaac-jesse-denpasarfood.pbp.cs.ui.ac.id"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "isaac-jesse-denpasarfood.pbp.cs.ui.ac.id", ".vercel.app", ".now.sh"]
 
 
 # Application definition
@@ -129,7 +129,7 @@ STATICFILES_DIRS = [
 ]
 
 
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 COMPRESS_ROOT = BASE_DIR / 'static'
 
 COMPRESS_ENABLED = True

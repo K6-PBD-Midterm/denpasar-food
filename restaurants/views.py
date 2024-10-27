@@ -55,34 +55,6 @@ class RestaurantListView(ListView):
         
         return context
 
+
 def restaurant_list_ajax(request):
-    search_by = request.GET.get('search_by', 'name')
-    search_query = request.GET.get('search', '')
-    selected_cuisines = request.GET.getlist('cuisines')
-    logger.info(f"Search by: {search_by}")
-    logger.info(f"Search query: {search_query}")
-    logger.info(f"Selected cuisines: {selected_cuisines}")
-
-    queryset = Restaurant.objects.all()
-
-    if search_query:
-        filter_kwargs = {f"{search_by}__icontains": search_query}
-        queryset = queryset.filter(**filter_kwargs)
-
-    if selected_cuisines:
-        for cuisine in selected_cuisines:
-            queryset = queryset.filter(cuisines__icontains=cuisine)
-
-    logger.info(f"Queryset count after filtering: {queryset.count()}")
-
-    paginator = Paginator(queryset, 9)  # Show 9 restaurants per page
-
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    context = {
-        'restaurants': page_obj,
-        'is_paginated': page_obj.has_other_pages(),
-        'page_obj': page_obj,
-    }
     return render(request, 'restaurant_list.html', context)
