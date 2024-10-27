@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="bg-[#f9f9f9]">
-<div id="search-container" class="sticky top-0 left-0 right-0 z-20 w-full">
+<div class="bg-[#f9f9f9] md: pt-8 md: px-2">
+<div id="search-container" class="sticky top-0 left-0 right-0 z-20 w-full px-2">
     <form id="search-form" method="get" action="{% url 'map' %}" class="flex justify-center items-center max-w-screen-md mx-auto">
         <div class="relative w-full">
             <input type="text" name="search" placeholder="Search for restaurants..." value="{{ request.GET.search }}" class="bg-white border border-gray-300 text-gray-700 placeholder-gray-500 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 shadow-md">
