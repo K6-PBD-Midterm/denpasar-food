@@ -10,7 +10,7 @@
     background: #2D2F36;
 }
 body {
-    background: url('https://img.freepik.com/free-vector/detailed-autumn-background_23-2149040182.jpg') no-repeat center center fixed;
+    background: url('https://as1.ftcdn.net/v2/jpg/05/35/45/28/1000_F_535452884_Ta3mWbQrJ9OKhPX5u9YYLLVIxkSEpVFN.jpg') no-repeat center center fixed;
     background-size: cover;
     font-family: 'Inter UI', sans-serif;
     margin: 0;
@@ -131,4 +131,8 @@ input::-moz-focus-inner {
 }
 #submit:active {
     color: #d0d0d2;
+}
+.error { 
+    color: red; 
+    margin-top: 20px; 
 }
