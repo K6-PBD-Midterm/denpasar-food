@@ -14,7 +14,10 @@ def add_review(request, restaurant_id):
             review.restaurant = restaurant
             review.user = request.user
             review.save()
+            messages.success(request, 'Your review has been added successfully!')
             return redirect('restaurant_detail', restaurant_id=restaurant.id)
+        else:
+            messages.error(request, 'There was an error with your review. Please try again.')
     else:
         form = ReviewForm()
     

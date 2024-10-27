@@ -1,33 +1,97 @@
-/* user_customization.css */
-
 .customization-container {
     width: 80%;
+    max-width: 800px;
     margin: auto;
-    padding: 20px;
+    padding: 30px;
     background-color: #fffcd8;
-    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
     text-align: center;
+    font-family: Arial, sans-serif;
 }
 
-.profile-section, .info-section, .review-section {
-    margin: 20px 0;
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
 .profile-pic {
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
+    border: 2px solid #562B00;
+}
+
+.info-section {
+    margin-bottom: 30px;
+}
+
+.review-section {
+    text-align: left;
+    margin: 30px auto;
+    width: 90%;
+}
+
+.review-item {
+    background-color: #fff;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+}
+
+.review-item p {
+    margin: 5px 0;
+}
+
+.review-rating {
+    font-weight: bold;
+    color: #562B00;
+    font-size: 16px;
+}
+
+.review-text {
+    color: #333;
+}
+
+.review-date {
+    font-size: 12px;
+    color: #777;
+}
+
+.like-dislike {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.like-dislike a {
+    color: #562B00;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.like-dislike a:hover {
+    text-decoration: underline;
+}
+
+.add-review {
+    font-size: 14px;
+    margin-top: 20px;
 }
 
 .btn {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 10px 25px;
     background-color: #562B00;
     color: white;
     text-decoration: none;
-    border-radius: 4px;
-    margin-top: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
 }
 
 .btn:hover {

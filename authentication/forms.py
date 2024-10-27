@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Profile
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
@@ -14,3 +15,8 @@ class CustomUserCreationForm(UserCreationForm):
                 "Password is too short, try adding a symbol/number or make it longer"
             )
         return password1
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['profile_picture']

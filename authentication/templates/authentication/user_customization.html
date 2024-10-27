@@ -24,10 +24,27 @@
             <h2>Your Reviews</h2>
             <ul>
                 {% for review in user_reviews %}
-                    <li>{{ review.content }} - <a href="{% url 'edit_review' review.id %}">Edit</a></li>
+                    <li class="review-item">
+                        <div>
+                            <p class="review-rating">Rating: {{ review.rating }} / 5</p>
+                            <p class="review-text">{{ review.content }}</p>
+                            <p class="review-date">Reviewed by {{ review.user.username }} on {{ review.created_at|date:"F j, Y, g:i a" }}</p>
+                            <div class="like-dislike">
+                                <a href="{% url 'like_restaurant' review.restaurant.id %}">Like</a> | 
+                                <a href="{% url 'dislike_restaurant' review.restaurant.id %}">Dislike</a>
+                            </div>
+                        </div>
+                    </li>
+                {% empty %}
+                    <li>No reviews yet. You can add your first review below!</li>
                 {% endfor %}
             </ul>
-            <a href="" class="btn">Add Review</a>
+            
+            <div class="add-review">
+                <h3>Add a Review</h3>
+                <p>If you want to add more reviews, please go back to the main restaurant list:</p>
+                <a href="{% url 'restaurant_list' %}" class="btn">Back to Restaurant List</a>
+            </div>
         </div>
     </div>
 </body>

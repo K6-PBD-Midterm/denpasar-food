@@ -1,9 +1,10 @@
-# views.py
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm  # Import your custom form
+from reviews.models import Review  # Import the Review model
+from restaurants.models import Restaurant  # Import the Restaurant model
 
 def login_view(request):
     if request.method == 'POST':
@@ -29,7 +30,6 @@ def register_view(request):
             messages.success(request, 'Registration successful! You can now log in.')
             return redirect('authentication:login')  # Redirect to the login page after registration
         else:
-            # If the form is not valid, it will display the specific error messages
             messages.error(request, 'Registration failed. Please try a longer password.')
     else:
         form = CustomUserCreationForm()  # Use your custom form here
@@ -38,4 +38,9 @@ def register_view(request):
 @login_required
 def user_customization(request):
     user_reviews = request.user.review_set.all()  
-    return render(request, 'authentication/user_customization.html', {'user_reviews': user_reviews})
+    restaurants = Restaurant.objects.all()  # Retrieve all restaurants
+
+    return render(request, 'authentication/user_customization.html', {
+        'user_reviews': user_reviews,
+        'restaurants': restaurants,  # Pass the restaurant list to the template
+    })
