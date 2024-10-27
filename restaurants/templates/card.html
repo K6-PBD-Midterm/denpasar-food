@@ -1,7 +1,7 @@
-<div class="flex flex-col items-start w-full h-full">  <!-- Use flexbox for vertical layout -->
+<div class="flex flex-col items-start w-full h-full">
     <div class="flex-shrink-0 w-full">
         {% if restaurant.image_url %}
-            <img src="{{ restaurant.image_url }}" alt="{{ restaurant.name }}" class="w-full h-40 object-cover rounded-lg mb-4">  <!-- Full width for images -->
+            <img src="{{ restaurant.image_url }}" alt="{{ restaurant.name }}" class="w-full h-40 object-cover rounded-lg mb-4">
         {% else %}
             <div class="w-full h-32 bg-gray-200 flex items-center justify-center rounded-lg mb-4">
                 <span>No Image Available</span>
@@ -21,16 +21,53 @@
         </p>
         <p><span class="font-semibold">Address:</span> {{ restaurant.address|default:"Not specified"|title }}</p>
         <p><span class="font-semibold">Phone:</span> {{ restaurant.phone|default:"Not specified"|title }}</p>
-        <p><span class="font-semibold">Price Range:</span> {{ restaurant.price_range|default:"Not specified"|title }}</p>
         {% if restaurant.website %}
             <p><span class="font-semibold">Website:</span> <a href="{{ restaurant.website }}" class="text-blue-500">{{ restaurant.website }}</a></p>
         {% endif %}
-
     </div>
-    <div class="mt-auto pt-4 w-full"> <!-- Adds margin top auto for spacing -->
-        <a href="{% url 'add_review' restaurant.id %}" class="bg-[#846496] text-white py-1 px-2 rounded-lg hover:bg-[#6e4f7c] transition duration-300">Add a review</a>
-        {% if restaurant.latitude and restaurant.longitude %}
-            <a href="https://www.google.com/maps/search/?api=1&query={{ restaurant.name }}&{{ restaurant.latitude}}%{{ rstaurant.longitude}}" target="_blank" class="bg-[#846496] text-white py-1 px-4 rounded-lg hover:bg-[#6e4f7c] transition duration-300 ml-2">View on Google</a>
+    <div class="mt-auto pt-4 w-full">
+        <a href="{% url 'add_review' restaurant.id %}" class="text-blue-500 hover:underline">Add a review</a>
+        <div class="mt-2">
+            <a href="{% url 'restaurant_detail' restaurant.id %}" class="text-blue-500 hover:underline">View reviews</a>
+        </div>
+        <!-- Like Button -->
+        {% if user.is_authenticated %}
+            <button id="like-btn-{{ restaurant.id }}" 
+                    data-restaurant-id="{{ restaurant.id }}" 
+                    class="{% if user_has_liked %}bg-yellow-700{% else %}bg-gray-500{% endif %} text-white font-bold py-1 px-3 rounded-lg hover:bg-yellow-600 mt-2"
+                    onclick="toggleLike({{ restaurant.id }})">
+                {% if user_has_liked %}Liked{% else %}Like{% endif %}
+            </button>
+        {% else %}
+            <p class="text-gray-500 text-sm mt-2">Login to like this restaurant.</p>
         {% endif %}
     </div>
 </div>
+
+<script>
+    function toggleLike(restaurantId) {
+        const likeButton = document.getElementById(`like-btn-${restaurantId}`);
+        
+        fetch(`/reviews/restaurant/${restaurantId}/like/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.liked) {
+                likeButton.classList.remove('bg-gray-500');
+                likeButton.classList.add('bg-yellow-700');
+                likeButton.textContent = 'Liked';
+            } else {
+                likeButton.classList.remove('bg-yellow-700');
+                likeButton.classList.add('bg-gray-500');
+                likeButton.textContent = 'Like';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
