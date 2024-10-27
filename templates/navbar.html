@@ -1,24 +1,23 @@
-<nav class="bg-white shadow-md">
-    <div class="container mx-auto px-4">
-        <ul class="flex items-center justify-between py-4">
-            <li class="flex items-center space-x-4">
-                {% if request.path == '/' %}
-                    <h1 class="font-bold text-lg ml-2 mr-4"><a href="{% url 'admin_dashboard:admin_dashboard_restaurant_list' %}">Denpasar Dine-In</a></h1>
-                {% else %}
-                    <h1 class="font-bold text-lg ml-2 mr-4"><a href="{% url 'restaurant_list' %}">Denpasar Dine-In</a></h1>
-                {% endif %}
-                {% if user.is_authenticated %}
-                    <span class="text-gray-700">Welcome, {{ user.username }}!</span>
-                    <a href="{% url 'authentication:logout' %}" class="text-blue-600 hover:text-blue-800">Logout</a>
-                {% else %}
-                    <a href="{% url 'authentication:login' %}" class="text-blue-600 hover:text-blue-800">Login</a>
-                    <a href="{% url 'authentication:register' %}" class="text-blue-600 hover:text-blue-800">Register</a>
-                {% endif %}
-            </li>
-            <li class="flex items-center space-x-4">
-                <a href="{% url 'restaurant_list' %}" class="text-gray-700 hover:text-gray-900 mx-2">Restaurant List</a>
-                <a href="{% url 'map' %}" class="text-gray-700 hover:text-gray-900">Map</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+<div class="container mx-auto px-4">
+    <ul class="flex items-center justify-between py-4">
+        <li class="flex items-center space-x-4">
+            {% if request.path == '/' %}
+                <h1 class="font-bold text-lg ml-2 mr-4"><a href="{% url 'admin_dashboard:admin_dashboard_restaurant_list' %}">Denpasar Dine-In</a></h1>
+            {% else %}
+                <h1 class="font-bold text-lg ml-2 mr-4"><a href="{% url 'restaurant_list' %}">Denpasar Dine-In</a></h1>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <span class="text-gray-700">Welcome, {{ user.username }}!</span>
+                <a href="{% url 'authentication:user_customization' %}" class="text-blue-600 hover:text-blue-800">Customization</a>
+                <a href="{% url 'authentication:logout' %}" class="text-blue-600 hover:text-blue-800">Logout</a>
+            {% else %}
+                <a href="{% url 'authentication:login' %}" class="text-blue-600 hover:text-blue-800">Login</a>
+                <a href="{% url 'authentication:register' %}" class="text-blue-600 hover:text-blue-800">Register</a>
+            {% endif %}
+        </li>
+        <li class="flex items-center space-x-4">
+            <a href="{% url 'restaurant_list' %}" class="text-gray-700 hover:text-gray-900 mx-2">Restaurant List</a>
+            <a href="{% url 'map' %}" class="text-gray-700 hover:text-gray-900">Map</a>
+        </li>
+    </ul>
+</div>

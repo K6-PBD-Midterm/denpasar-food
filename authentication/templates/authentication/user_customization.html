@@ -1,0 +1,45 @@
+<!-- user_customization.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Customization</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'auth/css/user_customization.css' %}">
+</head>
+<body>
+    <div class="customization-container">
+        <h1>Welcome, {{ request.user.username }}!</h1>
+        
+        <div class="profile-section">
+            <h2>Profile Picture</h2>
+            <img src="{{ request.user.profile_picture.url }}" alt="Profile Picture" class="profile-pic">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="profile_picture" accept="image/*">
+                <button type="submit" class="btn">Upload</button>
+            </form>
+        </div>
+
+        <div class="info-section">
+            <h2>Username: {{ request.user.username }}</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="username" value="{{ request.user.username }}" required>
+                <button type="submit" class="btn">Update Username</button>
+            </form>
+        </div>
+
+        <div class="review-section">
+            <h2>Your Reviews</h2>
+            <ul>
+                {% for review in user_reviews %}
+                    <li>{{ review.content }} - <a href="{% url 'edit_review' review.id %}">Edit</a></li>
+                {% endfor %}
+            </ul>
+            <a href="" class="btn">Add Review</a>
+        </div>
+    </div>
+</body>
+</html>

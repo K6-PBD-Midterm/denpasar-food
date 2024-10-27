@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -31,3 +35,11 @@ def register_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'authentication/register.html', {'form': form})
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def user_customization(request):
+    user_reviews = request.user.review_set.all()  # Replace with your actual model relation
+    return render(request, 'authentication/user_customization.html', {'user_reviews': user_reviews})
