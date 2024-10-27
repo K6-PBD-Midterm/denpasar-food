@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Restaurant, Review, Like
 from .forms import ReviewForm
+from django.http import JsonResponse
 
 @login_required
 def add_review(request, restaurant_id):
@@ -23,26 +24,25 @@ def add_review(request, restaurant_id):
 def restaurant_detail(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, id=restaurant_id)
     reviews = restaurant.restaurant_reviews.all()
-    user_has_liked = restaurant.likes.filter(user=request.user).exists() if request.user.is_authenticated else False
-    return render(request, 'restaurant_detail.html', {'restaurant': restaurant, 'reviews': reviews, 'user_has_liked': user_has_liked})
+
+    # Check if the current user has liked the restaurant
+    user_has_liked = Like.objects.filter(user=request.user, restaurant=restaurant).exists() if request.user.is_authenticated else False
+
+    # Pass the variables to the template
+    return render(request, 'restaurant_detail.html', {
+        'restaurant': restaurant,
+        'reviews': reviews,
+        'user_has_liked': user_has_liked,
+    })
 
 @login_required
 def like_restaurant(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, id=restaurant_id)
-    like, created = Like.objects.get_or_create(user=request.user, restaurant=restaurant)
-    if created:
-        messages.success(request, f'You have liked {restaurant.name}.')
-    else:
-        messages.info(request, f'You already liked {restaurant.name}.')
-    return redirect('restaurant_detail', restaurant_id=restaurant.id)
-
-@login_required
-def dislike_restaurant(request, restaurant_id):
-    restaurant = get_object_or_404(Restaurant, id=restaurant_id)
-    like = Like.objects.filter(user=request.user, restaurant=restaurant).first()
-    if like:
-        like.delete()
-        messages.success(request, f'You have disliked {restaurant.name}.')
-    else:
-        messages.info(request, f'You have not liked {restaurant.name}.')
-    return redirect('restaurant_detail', restaurant_id=restaurant.id)
+    liked, created = Like.objects.get_or_create(user=request.user, restaurant=restaurant)
+    
+    if not created:
+        # If the like already exists, delete it (toggle behavior)
+        liked.delete()
+        return JsonResponse({'liked': False})
+    
+    return JsonResponse({'liked': True})

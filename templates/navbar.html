@@ -1,21 +1,27 @@
-<nav class="bg-white shadow-md">
+<nav class="bg-gray-100 shadow-md">
     <div class="container mx-auto px-4">
-        <ul class="flex items-center justify-between py-4">
-            <li class="flex items-center space-x-4">
+        <div class="flex justify-between items-center py-4">
+            <!-- Left Side: Title -->
+            <div>
+                <h1 class="text-2xl font-bold"><a href="{% url 'restaurant_list' %}">Denpasar Dine-In</a></h1>
+            </div>
+
+            <!-- Middle: Links -->
+            <div class="flex space-x-8">
+                <a href="{% url 'restaurant_list' %}" class="text-gray-700 hover:text-gray-900">Restaurant List</a>
+                <a href="{% url 'map' %}" class="text-gray-700 hover:text-gray-900">Map</a>
+            </div>
+
+            <!-- Right Side: User Authentication -->
+            <div>
                 {% if user.is_authenticated %}
                     <span class="text-gray-700">Welcome, {{ user.username }}!</span>
-                    <a href="{% url 'authentication:logout' %}" class="text-blue-600 hover:text-blue-800">Logout</a>
+                    <a href="{% url 'authentication:logout' %}" class="ml-4 py-2 px-4 bg-black text-white rounded-3xl font-semibold hover:bg-gray-800">Logout</a>
                 {% else %}
-                    <a href="{% url 'authentication:login' %}" class="text-blue-600 hover:text-blue-800">Login</a>
-                    <a href="{% url 'authentication:register' %}" class="text-blue-600 hover:text-blue-800">Register</a>
+                    <a href="{% url 'authentication:login' %}" class="py-2 px-4 bg-black text-white rounded-3xl font-semibold hover:bg-gray-800">Login</a>
+                    <a href="{% url 'authentication:register' %}" class="ml-4 py-2 px-4 bg-black text-white rounded-3xl font-semibold hover:bg-gray-800">Register</a>
                 {% endif %}
-            </li>
-            <li class="flex items-center space-x-4">
-                <a href="#" class="text-gray-700 hover:text-gray-900">Add a new restaurant</a>
-                <a href="#" class="text-gray-700 hover:text-gray-900">Sort and filter restaurants</a>
-                <a href="#" class="text-gray-700 hover:text-gray-900">Add a review</a>
-                <a href="{% url 'map' %}" class="text-gray-700 hover:text-gray-900">Map</a>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 </nav>
