@@ -22,5 +22,8 @@
         "src": "/(.*)",
         "dest": "denpasar_food/wsgi.py"
       }
-    ]
+    ],
+    "env": {
+      "DJANGO_SETTINGS_MODULE": "denpasar_food.settings"
+    }
   }

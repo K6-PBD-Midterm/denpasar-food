@@ -1,2 +1,2 @@
-release: python3 manage.py migrate --noinput
+release: "python3 manage.py migrate --noinput && python3 manage.py createsuperuser --noinput --username $DJANGO_SUPERUSER_USERNAME --email $DJANGO_SUPERUSER_EMAIL --password $DJANGO_SUPERUSER_PASSWORD"
 web: gunicorn denpasar_food.wsgi
