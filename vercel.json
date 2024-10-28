@@ -1,29 +1,30 @@
 {
     "version": 2,
     "builds": [
-      {
-        "src": "denpasar_food/wsgi.py",
-        "use": "@vercel/python",
-        "config": {
-          "maxLambdaSize": "15mb"
+        {
+            "src": "denpasar_food/wsgi.py",
+            "use": "@vercel/python",
+            "config": {
+                "maxLambdaSize": "15mb"
+            }
+        },
+        {
+            "src": "static/**/*",
+            "use": "@vercel/static"
         }
-      },
-      {
-        "src": "static/**/*",
-        "use": "@vercel/static"
-      }
     ],
     "routes": [
-      {
-        "src": "/static/(.*)",
-        "dest": "/static/$1"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "denpasar_food/wsgi.py"
-      }
+        {
+            "src": "/static/(.*)",
+            "dest": "/static/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "denpasar_food/wsgi.py"
+        }
     ],
+    "buildCommand": "./build.sh",
     "env": {
-      "DJANGO_SETTINGS_MODULE": "denpasar_food.settings"
+        "DJANGO_SETTINGS_MODULE": "denpasar_food.settings"
     }
-  }
+}
