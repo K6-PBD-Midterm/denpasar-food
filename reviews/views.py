@@ -39,13 +39,3 @@ def like_restaurant(request, restaurant_id):
         messages.info(request, f'You already liked {restaurant.name}.')
     return redirect('restaurant_detail', restaurant_id=restaurant.id)
 
-@login_required
-def dislike_restaurant(request, restaurant_id):
-    restaurant = get_object_or_404(Restaurant, id=restaurant_id)
-    like = Like.objects.filter(user=request.user, restaurant=restaurant).first()
-    if like:
-        like.delete()
-        messages.success(request, f'You have disliked {restaurant.name}.')
-    else:
-        messages.info(request, f'You have not liked {restaurant.name}.')
-    return redirect('restaurant_detail', restaurant_id=restaurant.id)

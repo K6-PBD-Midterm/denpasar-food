@@ -47,5 +47,21 @@
             </div>
         </div>
     </div>
+    <div class="liked-restaurants">
+        <h2>Liked Restaurants</h2>
+        <ul>
+            {% for liked_restaurant in liked_restaurants %}
+                <li>
+                    <p><strong>{{ liked_restaurant.name }}</strong></p>
+                    <p>Cuisine: {{ liked_restaurant.cuisine }}</p>
+                    <p>Phone: {{ liked_restaurant.phone }}</p>
+                    <a href="{{ liked_restaurant.website }}" target="_blank">Visit Website</a>
+                </li>
+            {% empty %}
+                <li>You haven't liked any restaurants yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
 </body>
 </html>

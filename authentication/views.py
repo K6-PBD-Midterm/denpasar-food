@@ -37,10 +37,11 @@ def register_view(request):
 
 @login_required
 def user_customization(request):
-    user_reviews = request.user.review_set.all()  
-    restaurants = Restaurant.objects.all()  # Retrieve all restaurants
+    user = request.user
+    user_reviews = user.review_set.all()  # Fetch the user's reviews
+    liked_restaurants = Restaurant.objects.filter(likes__user=user)  # Restaurants liked by the user
 
     return render(request, 'authentication/user_customization.html', {
         'user_reviews': user_reviews,
-        'restaurants': restaurants,  # Pass the restaurant list to the template
+        'liked_restaurants': liked_restaurants,  # Pass the restaurant list to the template
     })
