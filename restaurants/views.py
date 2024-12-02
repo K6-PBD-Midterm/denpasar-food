@@ -1,5 +1,6 @@
 # views.py
 from django.shortcuts import render
+from django.http import JsonResponse, Http404
 from django.core.paginator import Paginator
 from django.views.generic import ListView
 from .models import Restaurant
@@ -57,3 +58,26 @@ class RestaurantListView(ListView):
 
 def restaurant_list_ajax(request):
     return render(request, 'restaurant_list.html', context)
+
+def restaurant_list_json(request):
+    restaurants = Restaurant.objects.all().values(
+        'id', 'name', 'description', 'reviews_count', 'rating', 'link', 'email', 'phone', 'website', 'image_url',
+        'ranking', 'address', 'detailed_address', 'latitude', 'longitude', 'reviews_per_rating', 'review_keywords',
+        'is_open', 'open_hours', 'menu_link', 'delivery_url', 'price_range', 'cuisines', 'diets', 'meal_types',
+        'dining_options', 'owner_types', 'top_tags'
+    )
+    print("test")
+    return JsonResponse(list(restaurants), safe=False)
+
+def restaurant_detail_json(request, id):
+    try:
+        restaurant = Restaurant.objects.values(
+            'id', 'name', 'description', 'reviews_count', 'rating', 'link', 'email', 'phone', 'website', 'image_url',
+            'ranking', 'address', 'detailed_address', 'latitude', 'longitude', 'reviews_per_rating', 'review_keywords',
+            'is_open', 'open_hours', 'menu_link', 'delivery_url', 'price_range', 'cuisines', 'diets', 'meal_types',
+            'dining_options', 'owner_types', 'top_tags'
+        ).get(id=id)
+    except Restaurant.DoesNotExist:
+        raise Http404("Restaurant does not exist")
+    
+    return JsonResponse(restaurant)

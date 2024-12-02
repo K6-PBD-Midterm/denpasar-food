@@ -22,13 +22,5 @@ class Like(models.Model):
     def __str__(self):
         return f'{self.user.username} likes {self.restaurant.name}'
     
-class Dislike(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='dislikes')
 
-    class Meta:
-        unique_together = ('user', 'restaurant')
-
-    def __str__(self):
-        return f'{self.user.username} dislikes {self.restaurant.name}'
 
