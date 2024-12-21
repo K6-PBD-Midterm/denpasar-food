@@ -5,7 +5,12 @@ from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm  # Import your custom form
 from reviews.models import Review  # Import the Review model
 from restaurants.models import Restaurant  # Import the Restaurant model
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
+from django.views.decorators.csrf import csrf_exempt
 
+
+@csrf_exempt
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')  # Use .get() to avoid KeyError
@@ -18,10 +23,12 @@ def login_view(request):
             messages.error(request, 'Invalid username or password.')
     return render(request, 'authentication/login.html')
 
+@csrf_exempt
 def logout_view(request):
     logout(request)
     return redirect('authentication:login')  # Redirect to the login page after logout
 
+@csrf_exempt
 def register_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)  # Use your custom form here
@@ -36,6 +43,7 @@ def register_view(request):
     return render(request, 'authentication/register.html', {'form': form})
 
 @login_required
+@csrf_exempt
 def user_customization(request):
     user = request.user
     user_reviews = user.review_set.all()  # Fetch the user's reviews
@@ -45,3 +53,8 @@ def user_customization(request):
         'user_reviews': user_reviews,
         'liked_restaurants': liked_restaurants,  # Pass the restaurant list to the template
     })
+
+@csrf_exempt
+def get_csrf_token(request):
+    csrf_token = get_token(request)
+    return JsonResponse({'csrfToken': csrf_token})

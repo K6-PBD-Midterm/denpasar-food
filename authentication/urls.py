@@ -8,4 +8,5 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),  # URL for logout
     path('register/', views.register_view, name='register'),  # URL for registration
     path('customization/', views.user_customization, name='user_customization'),  # URL for customization
+    path('csrf_token/', views.get_csrf_token, name='csrf_token'),  # URL for fetching CSRF token
 ]
